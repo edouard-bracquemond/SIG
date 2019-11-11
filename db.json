@@ -1,0 +1,93 @@
+{
+  "trees":
+    { "id": 1, "pictures":
+      {
+        "spring":
+          [
+            {
+              "id": 1,
+              "encode": ""
+            },
+            {
+              "id": 2,
+              "encode": ""
+            }
+          ],
+        "summer":
+        [
+          {
+            "id": 1,
+            "encode": ""
+          },
+          {
+            "id": 2,
+            "encode": ""
+          }
+        ],
+        "autumn":
+        [
+          {
+            "id": 1,
+            "encode": ""
+          },
+          {
+            "id": 2,
+            "encode": ""
+          }
+        ],
+        "winter":
+        [
+          {
+            "id": 1,
+            "encode": ""
+          },
+          {
+            "id": 2,
+            "encode": ""
+          }
+        ]
+      }
+
+
+    },
+  "equipment":[{
+  "id":1,"bench":[
+    {
+      "id": 1
+    }
+  ]},
+  {
+  "id":2,"public_toilets":[
+  {
+    "id": 1
+  }
+  ]},
+  {
+  "id":3,"trash":[
+    {
+      "id": 1
+    }
+  ]},
+  {
+  "id":4,"glass_container": [
+    {
+      "id": 1
+    }
+  ]}
+
+
+  ],
+
+  "users": [{
+   "id": 1,
+   "id": 2,
+   "id": 3
+  }],
+
+  "reporting": [
+    {"id": 1,"id_user": 1,"id_equipment": 1,"comment": "un probleme"}
+  ],
+  "suggestion":[
+  {"id": 1,"id_user": 1,"coord": "","comment": "un probleme"}
+  ]
+}
