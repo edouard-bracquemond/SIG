@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         myWebView.loadUrl("https://fr.wikipedia.org/wiki/Wikip%C3%A9dia:Accueil_principal");
 
 
-
+        Button bouton = (Button) findViewById(R.id.boutonTestID);
+        bouton.setText("Arbre");
     }
 
 }
