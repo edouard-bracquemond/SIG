@@ -4,6 +4,9 @@ import java.util.Collection;
 
 public class Tree {
 
+    private int id;
+    private Collection<Picture> pictures;
+
     public int getId() {
         return id;
     }
@@ -12,15 +15,10 @@ public class Tree {
         this.id = id;
     }
 
-    public Collection<Picture> getPictures() {
-        return pictures;
-    }
 
-    public void setPictures(Collection<Picture> pictures) {
-        this.pictures = pictures;
-    }
 
-    private int id;
-    private Collection<Picture> pictures;
+
+
+
 
 }

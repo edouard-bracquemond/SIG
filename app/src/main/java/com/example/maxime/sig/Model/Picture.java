@@ -2,6 +2,13 @@ package com.example.maxime.sig.Model;
 
 public class Picture {
 
+
+    private int id;
+    private String path;
+    private String season;
+
+
+
     public int getId() {
         return id;
     }
@@ -26,9 +33,6 @@ public class Picture {
         this.season = season;
     }
 
-    private int id;
-    private String path;
-    private String season;
 
 
 }
