@@ -16,13 +16,16 @@ var layers = [
 		wms_layer
 ];
 
-
+var coordonnee = GPS.getFromAndroid();
+var coor=coordonnee.split(' ');
+var latittude= parseFloat(coor[0]);
+var longitude= parseFloat(coor[1]);
 
  var map = new ol.Map({
         target: 'map',
         layers: layers,
         view: new ol.View({
-          center: ol.proj.fromLonLat([1.927454, 47.836737]),
-          zoom: 11
+          center: ol.proj.fromLonLat([longitude, latittude]),
+          zoom: 15
         })
       });
