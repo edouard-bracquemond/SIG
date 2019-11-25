@@ -55,6 +55,14 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"/>
 
+        <Button
+            android:id="@+id/boutonPhotoID"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"/>
+
+
     </LinearLayout>
 
 
