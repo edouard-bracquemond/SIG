@@ -23,16 +23,16 @@ public class LoginActivity extends AppCompatActivity {
         TextView passwordTextView = (TextView) findViewById(R.id.passwordTextViewID);
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditTextID);
         Button boutonConnexion = (Button) findViewById(R.id.boutonConnexionID);
-
+        Button boutonVersSignUp = (Button) findViewById(R.id.boutonSignUpID);
         mailTextView.setText("EMAIL");
         passwordTextView.setText("MOT DE PASSE");
         boutonConnexion.setText("CONNEXION");
-
+        boutonVersSignUp.setText("Sign Up");
         mailEditText.setHint("Email");
-        passwordEditText.setHint("Mot de passe");
+      //  passwordEditText.setHint("Mot de passe");
 
         final Intent intent = new Intent(this, MainActivity.class);
-
+        final Intent intentSignUp = new Intent(this, SignUpActivity.class);
 
         /*
         *
@@ -47,6 +47,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(intent);
+            }
+        });
+        boutonVersSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intentSignUp);
             }
         });
     }
