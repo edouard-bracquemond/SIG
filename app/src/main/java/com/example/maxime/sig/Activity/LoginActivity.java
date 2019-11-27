@@ -2,6 +2,7 @@ package com.example.maxime.sig.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maxime.sig.Call_API.Api;
+import com.example.maxime.sig.Model.AccessToken;
 import com.example.maxime.sig.Model.User;
 import com.example.maxime.sig.R;
 
+import java.io.IOException;
+
+import okhttp3.Headers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,9 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         Button boutonVersSignUp = (Button) findViewById(R.id.boutonSignUpID);
         mailTextView.setText("email ou username");
         passwordTextView.setText("mot de passe");
-        boutonConnexion.setText("Sign In");
+        boutonConnexion.setText("Connexion");
         boutonVersSignUp.setText("Sign Up");
-        mailEditText.setHint("email ou username");
+        mailEditText.setHint("Email");
       //  passwordEditText.setHint("Mot de passe");
 
         intent = new Intent(this, MainActivity.class);
@@ -92,27 +99,31 @@ public class LoginActivity extends AppCompatActivity {
             passwordEditText.setError("Enter a valid password");
             return;
         }
-        boolean canLogin=false;
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-               .addInterceptor(interceptor).build();
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+
+        //Create a new Interceptor.
+
         Retrofit retrofit = new Retrofit.Builder()
-                     .client(client)
+
                 .baseUrl("https://psigo.beta9.ovh/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api api = retrofit.create(Api.class);
         User user = new User(email,password);
-        Call<User> call = api.login(user);
-        call.enqueue(new Callback<User>() {
+        Call<AccessToken> call = api.login(user);
+        call.enqueue(new Callback<AccessToken>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
                 Context context = getApplicationContext();
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
                 if(response.isSuccessful()) {
+                    SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                    preferences.edit().putString("token", response.body().getAccessToken()).commit();
+                    String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
+                    Log.d("ZZZZZZZZZZZZZZ",token);
                     text = "Connection Success";
+
                     startActivity(intent);
                 }
                 else {
@@ -127,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<AccessToken> call, Throwable t) {
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence text="Connection fail";
