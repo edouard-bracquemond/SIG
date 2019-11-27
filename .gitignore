@@ -6,7 +6,7 @@
 */mvnw
 */mvnw.cmd
 */.gitignore
-*/src/main/resources/application.properties
+#*/src/main/resources/application.properties
 
 */.gradle
 */local.properties
