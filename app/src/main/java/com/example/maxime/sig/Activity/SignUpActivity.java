@@ -17,7 +17,7 @@ import com.example.maxime.sig.R;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
+//import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,12 +86,12 @@ public class SignUpActivity extends AppCompatActivity {
                 passwordEditText.setError("Enter a valide password");
                 return;
             }
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor).build();
+        //HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        //interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //OkHttpClient client = new OkHttpClient.Builder()
+         //       .addInterceptor(interceptor).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
+           //     .client(client)
                 .baseUrl("https://psigo.beta9.ovh/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

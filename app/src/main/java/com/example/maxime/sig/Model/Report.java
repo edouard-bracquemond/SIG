@@ -1,6 +1,6 @@
 package com.example.maxime.sig.Model;
 
-import com.google.gson.annotations.SerializedName;
+
 
 public class Report {
     private int id;

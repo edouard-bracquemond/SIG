@@ -12,10 +12,16 @@ public class User {
     @SerializedName("password")
     String password;
 
+    String usernameOrEmail;
+
     public User(String name, String username, String email, String password) {
         this.name = name;
         this.username = username;
         this.email = email;
+        this.password = password;
+    }
+    public User(String usernameOrEmail, String password){
+        this.usernameOrEmail = usernameOrEmail;
         this.password = password;
     }
 
@@ -50,4 +56,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
