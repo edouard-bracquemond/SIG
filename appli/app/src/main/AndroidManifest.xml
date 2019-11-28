@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -38,7 +38,9 @@
         <activity android:name=".Activity.SignUpActivity">
             android:exported="false"
         </activity>
-
+        <activity android:name=".Activity.AddPictureActivity">
+            android:exported="false"
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
