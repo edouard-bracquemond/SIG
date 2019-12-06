@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Activity.SplashScreenActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Un super spash screen"
-        android:gravity="center_vertical"
-        android:textSize="20dp"
-        tools:text="Un super spash screen" />
+
+    <ImageView
+        android:id="@id/imageSplashID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/splash_screen"/>
+
 </android.support.constraint.ConstraintLayout>

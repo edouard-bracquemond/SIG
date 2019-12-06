@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
          passwordEditText = (EditText) findViewById(R.id.passwordEditTextID);
         Button boutonConnexion = (Button) findViewById(R.id.boutonConnexionID);
         Button boutonVersSignUp = (Button) findViewById(R.id.boutonSignUpID);
-        mailTextView.setText("email ou username");
-        passwordTextView.setText("mot de passe");
+        mailTextView.setText("Email ou Nom d'utilisateur");
+        passwordTextView.setText("Mot de passe");
         boutonConnexion.setText("Connexion");
-        boutonVersSignUp.setText("Sign Up");
-        mailEditText.setHint("Email");
+        boutonVersSignUp.setText("Enregistrement");
+
       //  passwordEditText.setHint("Mot de passe");
 
         intent = new Intent(this, MainActivity.class);

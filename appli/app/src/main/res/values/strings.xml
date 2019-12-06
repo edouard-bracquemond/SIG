@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">SIG</string>
+    <string name="app_name">Les Espaces Verts</string>
+    <string name="splashScreenTextView">Les Espaces Verts</string>
+
 </resources>

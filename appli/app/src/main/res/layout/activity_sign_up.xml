@@ -14,6 +14,7 @@
             android:id="@+id/nomTextViewID"
             android:layout_width="109dp"
             android:layout_height="22dp"
+            android:textSize="20sp"
             android:text="Nom" />
 
         <EditText
@@ -27,6 +28,7 @@
             android:id="@+id/usernameTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="Nom d'utilisateur" />
 
         <EditText
@@ -40,6 +42,7 @@
             android:id="@+id/emailTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="Email" />
 
         <EditText
@@ -53,6 +56,7 @@
             android:id="@+id/passwordTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="Mot de passe" />
 
         <EditText
@@ -66,6 +70,7 @@
             android:id="@+id/signUpButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:text="Valider" />
 
     </LinearLayout>
