@@ -17,11 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.maxime.sig.GPS.GPSJScript;
+import com.example.maxime.sig.GPS.InfoSelection;
 import com.example.maxime.sig.R;
 
 import java.io.File;
@@ -52,6 +54,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         myWebView.addJavascriptInterface(new GPSJScript(this),"GPS");
+        myWebView.addJavascriptInterface(new InfoSelection(this),"InfoSelection");
         GPSJScript gpsjScript= new GPSJScript(getApplicationContext());
 
         myWebView.loadUrl("file:///android_asset/arbre.html");
@@ -178,4 +181,5 @@ public class NavigationDrawerActivity extends AppCompatActivity
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
 }

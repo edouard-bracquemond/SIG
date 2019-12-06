@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="seasons">
+        <item>Printemps</item>
+        <item>Été</item>
+        <item>Automne</item>
+        <item>Hiver</item>
+    </string-array>
+</resources>
