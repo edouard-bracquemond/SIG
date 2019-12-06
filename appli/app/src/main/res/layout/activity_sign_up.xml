@@ -12,59 +12,67 @@
 
         <TextView
             android:id="@+id/nomTextViewID"
-            android:layout_width="109dp"
-            android:layout_height="22dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:gravity="center_horizontal"
             android:text="Nom" />
 
         <EditText
             android:id="@+id/nameEditTextID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:ems="15"
+            android:inputType="textPersonName"
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/usernameTextViewID"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:gravity="center_horizontal"
             android:text="Nom d'utilisateur" />
 
         <EditText
             android:id="@+id/usernameEditTextID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:ems="15"
+            android:inputType="textPersonName"
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/emailTextViewID"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:gravity="center_horizontal"
             android:text="Email" />
 
         <EditText
             android:id="@+id/emailEditTextID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:ems="15"
+            android:inputType="textEmailAddress"
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/passwordTextViewID"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:gravity="center_horizontal"
             android:text="Mot de passe" />
 
         <EditText
             android:id="@+id/passwordEditTextID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:ems="15"
+            android:inputType="textPassword"
+            android:layout_gravity="center_horizontal"/>
 
         <Button
             android:id="@+id/signUpButton"

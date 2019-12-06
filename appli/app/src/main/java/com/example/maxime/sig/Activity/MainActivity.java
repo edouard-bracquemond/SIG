@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         /*Declaration des boutons*/
+
         Button boutonArbre = (Button) findViewById(R.id.boutonArbreID);
         boutonArbre.setText("Arbre");
         Button boutonCorbeille = (Button) findViewById(R.id.boutonCorbeilleID);

@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
       //  passwordEditText.setHint("Mot de passe");
 
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, NavigationDrawerActivity.class);
         final Intent intentSignUp = new Intent(this, SignUpActivity.class);
 
         /*
