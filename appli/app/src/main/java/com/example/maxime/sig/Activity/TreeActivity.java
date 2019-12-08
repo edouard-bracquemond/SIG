@@ -1,7 +1,11 @@
 package com.example.maxime.sig.Activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,11 +15,14 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,29 +32,55 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.maxime.sig.Call_API.Api;
+import com.example.maxime.sig.Model.User;
 import com.example.maxime.sig.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Multipart;
+import retrofit2.http.Part;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 public class TreeActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
-    private static int RESULT_LOAD_IMAGE = 1;
-    private static int REQUEST_IMAGE_CAPTURE=1;
-    String currentPhotoPath;
+    private String photoPath=null;
+    private String photoPathShort = null;
+    Uri selectedImage;
+    private static final int  RETOUR_PRENDRE_PHOTO = 1;
+    private static final int RETOUR_SELECT_PHOTO = 2;
     boolean selected = false;
     String seasonSelected=null;
     RecyclerView treesRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private int[] myDataset={R.drawable.ic_menu_compass};
+    private ImageView imgView;
+    private Bitmap image;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tree);
-
+        imgView = (ImageView)findViewById(R.id.imgViewx);
         Button addPhotoButton = findViewById(R.id.buttonAddPictureID);
         Button takePhotoButton = findViewById(R.id.buttonTakePictureID);
         Button validatePhotoButton = findViewById(R.id.buttonValidatePictureID);
@@ -66,105 +99,87 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                    Intent i = new Intent(
-                            Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                    startActivityForResult(i, RESULT_LOAD_IMAGE);
-
-
+                selectPhoto();
             }});
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
+                takePhoto();
             }});
         validatePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selected){
+               uploadPhoto();
 
-                }
             }});
+    }
+    private void takePhoto(){
 
+        Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(getPackageManager())!=null){
+            String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            File photoDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            try {
 
+                File photoFile = File.createTempFile("photo"+time,".jpg",photoDir);
+                photoPath = photoFile.getAbsolutePath();
+                photoPathShort = photoFile.getName();
+                Uri photoUri = FileProvider.getUriForFile(TreeActivity.this,TreeActivity.this.getApplicationContext().getPackageName()+".provider",photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+                startActivityForResult(intent,RETOUR_PRENDRE_PHOTO);
+            } catch (IOException e) {
 
+                e.printStackTrace();
+            }
+        }
+
+    }
+    private void selectPhoto(){
+        Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,RETOUR_SELECT_PHOTO);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==RETOUR_PRENDRE_PHOTO&&resultCode==RESULT_OK){
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            image = BitmapFactory.decodeFile(photoPath);
 
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+                    imgView.setImageBitmap(image);
 
-            ImageView imageView = (ImageView) findViewById(R.id.imgView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
         }
-        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = (ImageView) findViewById(R.id.imgView);
-            imageView.setImageBitmap(imageBitmap);
+        else if(requestCode==RETOUR_SELECT_PHOTO&&resultCode==RESULT_OK){
+
+         //   if(ActivityCompat.checkSelfPermission(TreeActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)== PERMISSION_GRANTED) {
+                selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                photoPath = cursor.getString(columnIndex);
+
+                cursor.close();
+                Bitmap image = BitmapFactory.decodeFile(photoPath);
+                imgView.setImageBitmap(image);
+         //   }
+          //  else{
+            /*    if(ActivityCompat.shouldShowRequestPermissionRationale(TreeActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    String[] persmissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    ActivityCompat.requestPermissions(TreeActivity.this,persmissions,3);
+                }
+                else{
+
+                }
+            }*/
         }
 
 
     }
 
-  /*  private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {}
 
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }*/
-
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
-
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-
-
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -177,4 +192,42 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
     public void onNothingSelected(AdapterView<?> adapterView) {
         selected = false;
     }
+
+    private void uploadPhoto(){
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                    .client(client)
+                .baseUrl("https://psigo.beta9.ovh/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        Api api = retrofit.create(Api.class);
+        File f= new File(photoPath);
+        Log.d("rereifjeifj",photoPathShort);
+        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        final String token = preferences.getString("token","");
+        RequestBody fbody = RequestBody.create(f,MediaType.parse("multipart/form-data"));
+        RequestBody sbody = RequestBody.create(seasonSelected,MediaType.parse("multipart/form-data"));
+        MultipartBody.Part multipartBody =MultipartBody.Part.createFormData("file",photoPathShort,fbody);
+
+        Call call = api.uploadPicture("Bearer "+token,1,multipartBody,sbody);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 }

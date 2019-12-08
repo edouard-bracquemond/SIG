@@ -66,7 +66,6 @@ public class SignUpActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString().trim();
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
-            Log.d("TTTTTTTTTTTTT",password);
 
 
             if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -92,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
          //       .addInterceptor(interceptor).build();
         Retrofit retrofit = new Retrofit.Builder()
            //     .client(client)
-                .baseUrl("https://psigo.beta9.ovh/api/")
+                .baseUrl("https://psigo.beta9.ovh/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

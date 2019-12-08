@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -36,10 +37,11 @@
                 />
 
             <ImageView
-                android:id="@+id/imgView"
+                android:id="@+id/imgViewx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"></ImageView>
+                android:layout_weight="1"
+                app:srcCompat="@mipmap/ic_launcher_arbre_transparent"></ImageView>
 
     <android.support.v7.widget.RecyclerView android:id="@+id/trees_recycler_view"
         android:scrollbars="vertical"

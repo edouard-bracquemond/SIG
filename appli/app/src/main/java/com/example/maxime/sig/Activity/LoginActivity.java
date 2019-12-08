@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
 
-                .baseUrl("https://psigo.beta9.ovh/api/")
+                .baseUrl("https://psigo.beta9.ovh/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api api = retrofit.create(Api.class);
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
                     preferences.edit().putString("token", response.body().getAccessToken()).commit();
                     String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
-                    Log.d("ZZZZZZZZZZZZZZ",token);
+
                     text = "Connection Success";
 
                     startActivity(intent);

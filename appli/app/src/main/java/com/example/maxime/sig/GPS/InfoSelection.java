@@ -18,12 +18,17 @@ public class InfoSelection {
 
     @JavascriptInterface
     public void  goToTreeActivity(String html){
-        int id = 0;
+        int id = 1;
         Intent treeI = new Intent(mContext, TreeActivity.class);
         treeI.putExtra("id",id);
         mContext.startActivity(treeI);
 
 
+    }
+    @JavascriptInterface
+    public void goToBenchActivity(String html){
+        int id=0;
+       // Intent benchI = new Intent(mContext,)
     }
 
 }
