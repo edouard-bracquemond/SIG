@@ -1,15 +1,20 @@
 
 package com.example.maxime.sig.Activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.maxime.sig.R;
 
 import org.w3c.dom.Text;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -18,6 +23,17 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
+
+            Toast.makeText(getBaseContext(), "Geoloc conseillée", Toast.LENGTH_LONG).show();
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+            ActivityCompat.requestPermissions(this,permissions,42);
+
+            return;
+        }
 
         Handler myHandler = new Handler();
         myHandler.postDelayed(new Runnable() {

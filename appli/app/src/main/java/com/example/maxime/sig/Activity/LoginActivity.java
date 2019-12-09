@@ -1,8 +1,10 @@
 package com.example.maxime.sig.Activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,10 +37,42 @@ public class LoginActivity extends AppCompatActivity {
     EditText mailEditText;
     EditText passwordEditText;
     Intent intent;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*
+         * On bypass la connexion systematique, si on a un token en memoire on l'exploite
+         * Todo: Verification de la validité du token au préalable
+         */
+        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        if (preferences.contains("token")){
+            String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
+            Context c = getApplicationContext();
+            Toast toast = Toast.makeText(c, token,  Toast.LENGTH_LONG);
+            toast.show();
+            intent = new Intent(this, NavigationDrawerActivity.class);
+            startActivity(intent);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        /*
+            * On bypass la connexion systematique, si on a un token en memoire on l'exploite
+            * Todo: Verification de la validité du token au préalable
+        */
+        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        if (preferences.contains("token")){
+            String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
+            Context c = getApplicationContext();
+            Toast toast = Toast.makeText(c, token,  Toast.LENGTH_LONG);
+            toast.show();
+            intent = new Intent(this, NavigationDrawerActivity.class);
+            startActivity(intent);
+        }
 
 
         TextView mailTextView = (TextView) findViewById(R.id.mailTextViewID);
