@@ -1,6 +1,7 @@
 package com.example.maxime.sig.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -108,8 +109,22 @@ public class NavigationDrawerActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_logout){
+            logout();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void logout(){
+        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        finish();
+        //moveTaskToBack(true);
+        //System.exit(0);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

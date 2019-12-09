@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                     String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
 
                     text = "Connection Success";
+                    passwordEditText.setText("");
 
                     startActivity(intent);
                 }
