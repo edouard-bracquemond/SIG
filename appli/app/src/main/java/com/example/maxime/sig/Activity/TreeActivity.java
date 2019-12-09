@@ -212,9 +212,14 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
         final String token = preferences.getString("token","");
         RequestBody fbody = RequestBody.create(f,MediaType.parse("multipart/form-data"));
         RequestBody sbody = RequestBody.create(seasonSelected,MediaType.parse("multipart/form-data"));
-        MultipartBody.Part multipartBody =MultipartBody.Part.createFormData("file",photoPathShort,fbody);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file",photoPathShort,fbody);
 
-        Call call = api.uploadPicture("Bearer "+token,1,multipartBody,sbody);
+
+        //Recuperer l'id
+        Intent intent = getIntent();
+        int arbre_id = intent.getIntExtra("id",0);
+
+        Call call = api.uploadPicture("Bearer "+token, arbre_id, multipartBody,sbody);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

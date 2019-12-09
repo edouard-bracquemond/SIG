@@ -35,12 +35,17 @@ var view = new ol.View({
    var viewResolution = /** @type {number} */ (view.getResolution());
    var url = wmsSource.getFeatureInfoUrl(
      evt.coordinate, viewResolution, 'EPSG:3857',
-     {'INFO_FORMAT': 'text/html'});
+     {'INFO_FORMAT': 'application/json'});
    if (url) {
      fetch(url)
        .then(function (response) { return response.text(); })
        .then(function (html) {
-            InfoSelection.goToTreeActivity(html);
+            var obj = JSON.parse(html);
+            var id = 0;
+            if ( (obj['features']).length != 0){
+                id = (obj['features'][0]['properties']['gid']);
+            }
+            InfoSelection.goToTreeActivity(id);
    //      document.getElementById('info').innerHTML = html;
        });
    }

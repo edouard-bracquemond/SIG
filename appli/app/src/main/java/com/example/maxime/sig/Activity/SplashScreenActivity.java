@@ -31,8 +31,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             //    ActivityCompat#requestPermissions
             String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
             ActivityCompat.requestPermissions(this,permissions,42);
-
-            return;
         }
 
         Handler myHandler = new Handler();
