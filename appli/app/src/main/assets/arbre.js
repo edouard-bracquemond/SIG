@@ -21,6 +21,10 @@ var coor=coordonnee.split(' ');
 var latittude= parseFloat(coor[0]);
 var longitude= parseFloat(coor[1]);
 
+
+
+
+
 var view = new ol.View({
                      center: ol.proj.fromLonLat([longitude, latittude]),
                      zoom: 15
@@ -30,6 +34,10 @@ var view = new ol.View({
         layers: layers,
         view: view
       });
+
+
+
+
  map.on('singleclick', function(evt) {
  //  document.getElementById('info').innerHTML = '';
    var viewResolution = /** @type {number} */ (view.getResolution());
@@ -50,3 +58,51 @@ var view = new ol.View({
        });
    }
  });
+
+/*ici Point emplacement ajouté avec une nouvelle couche*/
+
+refreshGPS(); //pour pas attendre 2000 la premeire fois
+var interval = window.setInterval(refreshGPS, 2500);
+
+function refreshGPS(){
+
+
+
+        coordonnee = GPS.getFromAndroid();
+        var pointPosition = new ol.Feature({
+           geometry: new ol.geom.Point(
+             ol.proj.fromLonLat([coor[1],coor[0]])
+           ),
+         });
+
+
+         var myStyle = new ol.style.Style({
+              image: new ol.style.Circle({
+                radius: 9,
+                fill: new ol.style.Fill({color: 'red'})
+              })
+            })
+
+           pointPosition.setStyle(myStyle);
+
+         var vectorSource = new ol.source.Vector({
+           features: [pointPosition]
+         });
+
+         var pointVectorLayer = new ol.layer.Vector({
+           source: vectorSource,
+         });
+
+        map.addLayer(pointVectorLayer);
+        var intervalle = window.setInterval(removePoint, 2000);
+
+        function removePoint(){
+                window.map.removeLayer(pointVectorLayer);
+        }
+    }
+
+
+
+
+
+
