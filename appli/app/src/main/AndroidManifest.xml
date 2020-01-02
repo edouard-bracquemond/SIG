@@ -22,30 +22,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Activity.SplashScreenActivity">
+        <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity">
-            android:exported="false"
+        <activity android:name=".activity.LoginActivity"
+            android:exported="false">
         </activity>
-        <activity android:name=".Activity.LoginActivity">
-            android:exported="false"
+        <activity android:name=".activity.SignUpActivity"
+            android:exported="false">
         </activity>
-        <activity android:name=".Activity.SignUpActivity">
-            android:exported="false"
-        </activity>
-        <activity android:name=".Activity.TreeActivity">
-            android:exported="false"
+        <activity android:name=".activity.TreeActivity"
+            android:exported="false">
         </activity>
 
 
 
         <activity
-            android:name=".Activity.NavigationDrawerActivity"
+            android:name=".activity.NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

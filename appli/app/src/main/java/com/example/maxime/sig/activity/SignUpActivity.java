@@ -1,4 +1,4 @@
-package com.example.maxime.sig.Activity;
+package com.example.maxime.sig.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,18 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.maxime.sig.Call_API.Api;
-import com.example.maxime.sig.Model.User;
+import com.example.maxime.sig.api.Api;
+import com.example.maxime.sig.model.User;
 import com.example.maxime.sig.R;
 
-import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
-//import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+//import okhttp3.logging.HttpLoggingInterceptor;
 
 
 public class SignUpActivity extends AppCompatActivity {

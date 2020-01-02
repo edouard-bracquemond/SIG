@@ -1,14 +1,11 @@
-package com.example.maxime.sig.GPS;
+package com.example.maxime.sig.gps;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.example.maxime.sig.Activity.SignUpActivity;
-import com.example.maxime.sig.Activity.TreeActivity;
-import com.example.maxime.sig.Model.Tree;
+import com.example.maxime.sig.activity.TreeActivity;
 
 public class InfoSelection {
     Context mContext;

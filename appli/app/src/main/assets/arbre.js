@@ -1,4 +1,4 @@
- var osm_layer = new ol.layer.Tile({
+var osm_layer = new ol.layer.Tile({
 	source: new ol.source.OSM()
 });
 var wmsSource = new ol.source.TileWMS({
@@ -52,12 +52,26 @@ var view = new ol.View({
             var id = 0;
             if ( (obj['features']).length != 0){
                 id = (obj['features'][0]['properties']['gid']);
+                type = (obj['features'][0]['properties']['type']);
+                genre = (obj['features'][0]['properties']['genre']);
+                espece = (obj['features'][0]['properties']['espece']);
+                variete = (obj['features'][0]['properties']['variete']);
+                $('.modal-title').html("Arbre de type "+type)
+                $('#data').html("Genre: "+genre+"<br> Espèce: "+espece+"<br>Variété: "+variete);
+                $('#id').val(""+id);
+                $('#basicModal').modal('show');
             }
-            InfoSelection.goToTreeActivity(id);
+            //InfoSelection.goToTreeActivity(id);
    //      document.getElementById('info').innerHTML = html;
        });
    }
  });
+
+
+function uploadPhoto() {
+    var id = $('#id').val();
+    InfoSelection.goToTreeActivity(id);
+ }
 
 /*ici Point emplacement ajouté avec une nouvelle couche*/
 
@@ -65,8 +79,6 @@ refreshGPS(); //pour pas attendre 2000 la premeire fois
 var interval = window.setInterval(refreshGPS, 2500);
 
 function refreshGPS(){
-
-
 
         coordonnee = GPS.getFromAndroid();
         var pointPosition = new ol.Feature({

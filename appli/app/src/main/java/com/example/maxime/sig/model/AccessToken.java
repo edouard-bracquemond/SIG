@@ -1,4 +1,4 @@
-package com.example.maxime.sig.Model;
+package com.example.maxime.sig.model;
 
 public class AccessToken {
     String accessToken;

@@ -1,4 +1,4 @@
-package com.example.maxime.sig.Activity;
+package com.example.maxime.sig.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,11 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.FileProvider;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,21 +15,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.maxime.sig.GPS.GPSJScript;
-import com.example.maxime.sig.GPS.InfoSelection;
+import com.example.maxime.sig.gps.GPSJScript;
+import com.example.maxime.sig.gps.InfoSelection;
 import com.example.maxime.sig.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.example.maxime.sig.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
+import java.util.Locale;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,7 +54,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         GPSJScript gpsjScript= new GPSJScript(getApplicationContext());
 
         myWebView.loadUrl("file:///android_asset/arbre.html");
-
+        getSupportActionBar().setTitle("Les arbres de l'agglo");
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -111,6 +106,10 @@ public class NavigationDrawerActivity extends AppCompatActivity
         }
         if (id == R.id.action_logout){
             logout();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //A B C si D appelle A, B,C,D sont delete
+            startActivity(intent);
+            //finish();
             return true;
         }
 
@@ -121,8 +120,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
-        editor.commit();
-        finish();
+        editor.apply();
         //moveTaskToBack(true);
         //System.exit(0);
     }
@@ -133,19 +131,37 @@ public class NavigationDrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.arbreID) {
-            myWebView.loadUrl("file:///android_asset/arbre.html");
-        } else if (id == R.id.bancID) {
-            myWebView.loadUrl("file:///android_asset/banc.html");
-        } else if (id == R.id.corbeilleID) {
-            myWebView.loadUrl("file:///android_asset/corbeille.html");
-        } else if (id == R.id.sanitaireID) {
-            myWebView.loadUrl("file:///android_asset/sanitaire.html");
-        } else if (id == R.id.dechetID) {
-            myWebView.loadUrl("file:///android_asset/dechet.html");
-        } else if (id == R.id.photoID) {
-            dispatchTakePictureIntent();
-            galleryAddPic();
+        switch (id){
+            case R.id.arbreID:{
+                myWebView.loadUrl("file:///android_asset/arbre.html");
+                getSupportActionBar().setTitle("Les arbres de l'agglo");
+                break;
+            }
+            case R.id.bancID:{
+                myWebView.loadUrl("file:///android_asset/banc.html");
+                getSupportActionBar().setTitle("Les bancs de l'agglo");
+                break;
+            }
+            case R.id.corbeilleID:{
+                myWebView.loadUrl("file:///android_asset/corbeille.html");
+                getSupportActionBar().setTitle("Les poubelles de l'agglo");
+                break;
+            }
+            case R.id.sanitaireID:{
+                myWebView.loadUrl("file:///android_asset/sanitaire.html");
+                getSupportActionBar().setTitle("Les sanitaires de l'agglo");
+                break;
+            }
+            case R.id.dechetID:{
+                myWebView.loadUrl("file:///android_asset/dechet.html");
+                getSupportActionBar().setTitle("Les ??? de l'agglo");
+                break;
+            }
+            case R.id.photoID:{
+                dispatchTakePictureIntent();
+                galleryAddPic();
+            }
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -183,7 +199,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.FRANCE).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(

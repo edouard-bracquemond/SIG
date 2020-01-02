@@ -1,12 +1,8 @@
-package com.example.maxime.sig.GPS;
+package com.example.maxime.sig.gps;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.webkit.JavascriptInterface;
-import android.widget.Toast;
 
 public class GPSJScript  {
     Context mContext;

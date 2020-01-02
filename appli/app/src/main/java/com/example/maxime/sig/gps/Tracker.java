@@ -1,4 +1,4 @@
-package com.example.maxime.sig.GPS;
+package com.example.maxime.sig.gps;
 
 import android.Manifest;
 import android.content.Context;
@@ -8,11 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
-import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class Tracker implements LocationListener {
     private Context mContext;

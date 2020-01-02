@@ -1,18 +1,15 @@
 
-package com.example.maxime.sig.Activity;
+package com.example.maxime.sig.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maxime.sig.R;
-
-import org.w3c.dom.Text;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 

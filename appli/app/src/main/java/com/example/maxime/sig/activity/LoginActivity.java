@@ -1,32 +1,27 @@
-package com.example.maxime.sig.Activity;
+package com.example.maxime.sig.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.maxime.sig.Call_API.Api;
-import com.example.maxime.sig.Model.AccessToken;
-import com.example.maxime.sig.Model.User;
+import com.example.maxime.sig.api.Api;
+import com.example.maxime.sig.api.Service;
+import com.example.maxime.sig.model.AccessToken;
+import com.example.maxime.sig.model.Picture;
+import com.example.maxime.sig.model.User;
 import com.example.maxime.sig.R;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
-import okhttp3.Headers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,8 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
         if (preferences.contains("token")){
             String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
+            Service s = new Service();
+            s.imageList(token, 1);
             Context c = getApplicationContext();
-            Toast toast = Toast.makeText(c, token,  Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(c, "Hello "+s.pictures.size(),  Toast.LENGTH_LONG);
             toast.show();
             intent = new Intent(this, NavigationDrawerActivity.class);
             startActivity(intent);
@@ -76,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         TextView mailTextView = (TextView) findViewById(R.id.mailTextViewID);
-         mailEditText = (EditText) findViewById(R.id.mailEditTextID);
+        mailEditText = (EditText) findViewById(R.id.mailEditTextID);
         TextView passwordTextView = (TextView) findViewById(R.id.passwordTextViewID);
-         passwordEditText = (EditText) findViewById(R.id.passwordEditTextID);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditTextID);
         Button boutonConnexion = (Button) findViewById(R.id.boutonConnexionID);
         Button boutonVersSignUp = (Button) findViewById(R.id.boutonSignUpID);
         mailTextView.setText("Email ou Nom d'utilisateur");
@@ -153,12 +150,13 @@ public class LoginActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 if(response.isSuccessful()) {
                     SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-                    preferences.edit().putString("token", response.body().getAccessToken()).commit();
+                    preferences.edit().putString("token", response.body().getAccessToken()).apply();
                     String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
 
                     text = "Connection Success";
                     passwordEditText.setText("");
 
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
                 else {

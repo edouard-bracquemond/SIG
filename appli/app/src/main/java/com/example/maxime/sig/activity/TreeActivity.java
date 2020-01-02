@@ -1,11 +1,8 @@
-package com.example.maxime.sig.Activity;
+package com.example.maxime.sig.activity;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,52 +11,37 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.example.maxime.sig.Call_API.Api;
-import com.example.maxime.sig.Model.User;
+import com.example.maxime.sig.api.Api;
 import com.example.maxime.sig.R;
-
-import org.jetbrains.annotations.NotNull;
+import com.example.maxime.sig.api.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Multipart;
-import retrofit2.http.Part;
-
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class TreeActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
@@ -117,7 +99,7 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
 
         Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(intent.resolveActivity(getPackageManager())!=null){
-            String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String time = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.FRANCE).format(new Date());
             File photoDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             try {
 
@@ -213,7 +195,6 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
         RequestBody fbody = RequestBody.create(f,MediaType.parse("multipart/form-data"));
         RequestBody sbody = RequestBody.create(seasonSelected,MediaType.parse("multipart/form-data"));
         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file",photoPathShort,fbody);
-
 
         //Recuperer l'id
         Intent intent = getIntent();

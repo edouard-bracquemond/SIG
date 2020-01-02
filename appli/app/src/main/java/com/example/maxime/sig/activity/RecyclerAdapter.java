@@ -1,4 +1,4 @@
-package com.example.maxime.sig.Activity;
+package com.example.maxime.sig.activity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
