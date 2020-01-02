@@ -97,8 +97,10 @@ function uploadPhoto() {
  	});
  	// On scrute les changements des propriétés
  	geolocation.on('change:position', function(evt) {
- 	    console.log("La geoloc a changé "+geolocation.getPosition());
+ 	    //console.log("La geoloc a changé "+geolocation.getPosition());
  		var position = geolocation.getPosition();
+
+ 		//view.setCenter(position); //On ne fait pas un suivi
  		// On transforme la projection des coordonnées
  		var newPosition=ol.proj.transform(position, 'EPSG:3857','EPSG:4326');
  		// Attribution de la géométrie de ObjPosition avec les coordonnées de la position
@@ -107,7 +109,7 @@ function uploadPhoto() {
 
  	var precisionFeature = new ol.Feature();
  	geolocation.on('change:accuracyGeometry', function(evt){
-        console.log("La geoloc a changé "+geolocation.getAccuracyGeometry());
+        //console.log("La geoloc a changé "+geolocation.getAccuracyGeometry());
         precisionFeature.setGeometry(geolocation.getAccuracyGeometry());
  	});
  	// On alerte si une erreur est trouvée
@@ -127,98 +129,22 @@ function uploadPhoto() {
 
     map.addLayer(pointVectorLayer);
 
+    //Point de position
 
-/*ici Point emplacement ajouté avec une nouvelle couche*/
+    const locate = document.createElement('div');
+    locate.className = 'ol-control ol-unselectable locate';
+    locate.innerHTML = '<button title="Locate me">◎</button>';
 
-/*
-refreshGPS(); //pour pas attendre 2000 la premeire fois
-var interval = window.setInterval(refreshGPS, 2500);
-
-function refreshGPS(){
-
-        coordonnee = GPS.getFromAndroid();
-        var pointPosition = new ol.Feature({
-           geometry: new ol.geom.Point(
-             ol.proj.fromLonLat([coor[1],coor[0]])
-           ),
-         });
-
-
-         var myStyle = new ol.style.Style({
-              image: new ol.style.Circle({
-                radius: 9,
-                fill: new ol.style.Fill({color: 'red'}),
-                stroke: new ol.style.Stroke({color: '#fff', width: 2})
-              })
-            })
-
-           pointPosition.setStyle(myStyle);
-
-         var vectorSource = new ol.source.Vector({
-           features: [pointPosition]
-         });
-
-         var pointVectorLayer = new ol.layer.Vector({
-           source: vectorSource,
-         });
-
-        map.addLayer(pointVectorLayer);
-        var intervalle = window.setInterval(removePoint, 2000);
-
-        function removePoint(){
-                window.map.removeLayer(pointVectorLayer);
-        }
-    }
-
-/*var geolocation = new ol.Geolocation({
-  // enableHighAccuracy must be set to true to have the heading value.
-  trackingOptions: {
-    enableHighAccuracy: true
-  },
-  projection: view.getProjection()
-});
-
-geolocation.setTracking(true);
+    locate.addEventListener('click', function() {
+      if (!sourceVecteur.isEmpty()) {
+        map.getView().fit(sourceVecteur.getExtent(), {
+          maxZoom: 17,
+          duration: 500
+        });
+      }
+    });
 
 
-// handle geolocation error.
-geolocation.on('error', function(error) {
-
-});
-
-var accuracyFeature = new ol.Feature();
-geolocation.on('change:accuracyGeometry', function() {
-  accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-});
-
-var positionFeature = new ol.Feature();
-positionFeature.setStyle(new ol.Style({
-  image: new ol.CircleStyle({
-    radius: 6,
-    fill: new ol.Style.Fill({
-      color: '#3399CC'
-    }),
-    stroke: new ol.Style.Stroke({
-      color: '#fff',
-      width: 2
-    })
-  })
-}));
-
-geolocation.on('change:position', function() {
-  var coordinates = geolocation.getPosition();
-  positionFeature.setGeometry(coordinates ?
-    new Point(coordinates) : null);
-});
-
-new VectorLayer({
-  map: map,
-  source: new VectorSource({
-    features: [accuracyFeature, positionFeature]
-  })
-});
-*/
-
-
-
-
+    map.addControl(new ol.control.Control({
+      element: locate
+    }));
