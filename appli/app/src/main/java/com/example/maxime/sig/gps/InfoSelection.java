@@ -6,6 +6,7 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.example.maxime.sig.activity.TreeActivity;
+import com.example.maxime.sig.activity.TreePicturesActivity;
 
 public class InfoSelection {
     Context mContext;
@@ -25,7 +26,19 @@ public class InfoSelection {
         if (id!=0){
             mContext.startActivity(treeI);
         }
+    }
 
+    @JavascriptInterface
+    public void  goToTreePicturesActivity(String html){
+        //Dans le param html seul l'id de l'arbre est renvoyé
+        int id =  Integer.parseInt(html);
+        Intent treeI = new Intent(mContext, TreePicturesActivity.class);
+        treeI.putExtra("id",id);
+        Log.d("L'id est: ", html);
+        //Log.d("L'id est: ", infos);
+        if (id!=0){
+            mContext.startActivity(treeI);
+        }
     }
 
     @JavascriptInterface

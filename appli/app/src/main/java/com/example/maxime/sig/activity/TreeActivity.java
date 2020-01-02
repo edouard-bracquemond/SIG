@@ -1,7 +1,7 @@
 package com.example.maxime.sig.activity;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -22,11 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.maxime.sig.api.Api;
 import com.example.maxime.sig.R;
-import com.example.maxime.sig.api.Service;
+import com.example.maxime.sig.api.Api;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +58,9 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
     private int[] myDataset={R.drawable.ic_menu_compass};
     private ImageView imgView;
     private Bitmap image;
+
+    ProgressDialog progressDoalog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +179,11 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
     }
 
     private void uploadPhoto(){
+
+        progressDoalog = new ProgressDialog(TreeActivity.this);
+        progressDoalog.setMessage("Loading....");
+        progressDoalog.show();
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -199,7 +205,7 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file",photoPathShort,fbody);
 
         //Recuperer l'id
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         int arbre_id = intent.getIntExtra("id",0);
 
         Call call = api.uploadPicture("Bearer "+token, arbre_id, multipartBody,sbody);
@@ -207,11 +213,7 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
             @Override
             public void onResponse(Call call, Response response) {
 
-                if (response.isSuccessful()){
-                    Context c = getApplicationContext();
-                    Toast toast = Toast.makeText(c, "Upload reussi",  Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                progressDoalog.dismiss();
             }
 
             @Override

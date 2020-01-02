@@ -37,7 +37,7 @@ dependencies {
     implementation 'org.osmdroid:osmdroid-wms:6.1.2'
     implementation 'org.osmdroid:osmdroid-mapsforge:6.1.2'
     //implementation 'org.osmdroid:osmdroid-geopackage:6.1.2'
-    implementation ('com.squareup.picasso:picasso:2.71828') {
+    implementation('com.squareup.picasso:picasso:2.71828') {
         exclude group: 'com.android.support'
         exclude module: ['exifinterface', 'support-annotations']
     }

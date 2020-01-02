@@ -12,14 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.maxime.sig.api.Api;
-import com.example.maxime.sig.api.Service;
-import com.example.maxime.sig.model.AccessToken;
-import com.example.maxime.sig.model.Picture;
-import com.example.maxime.sig.model.User;
 import com.example.maxime.sig.R;
-
-import java.util.ArrayList;
+import com.example.maxime.sig.api.Api;
+import com.example.maxime.sig.model.AccessToken;
+import com.example.maxime.sig.model.User;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -43,10 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
         if (preferences.contains("token")){
             String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
-            Service s = new Service();
-            s.imageList(token, 1);
             Context c = getApplicationContext();
-            Toast toast = Toast.makeText(c, "Hello "+s.pictures.size(),  Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(c, token,  Toast.LENGTH_LONG);
             toast.show();
             intent = new Intent(this, NavigationDrawerActivity.class);
             startActivity(intent);

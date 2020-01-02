@@ -69,7 +69,12 @@ var view = new ol.View({
 function uploadPhoto() {
     var id = $('#id').val();
     InfoSelection.goToTreeActivity(id);
- }
+}
+
+function photos() {
+    var id = $('#id').val();
+    InfoSelection.goToTreePicturesActivity(id);
+}
 
 
  // Objet géographique de la position de géolocalisation
