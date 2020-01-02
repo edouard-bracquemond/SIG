@@ -22,8 +22,9 @@ public class GPSJScript  {
             longitude = location.getLongitude();
         }
         else{
-            latitude=1;
-            longitude=1;
+            //On se positionne sur les coordonées de la mairie d'Orléans
+            latitude=47.902815;
+            longitude=1.908836;
         }
         return latitude+" "+ longitude;
     }

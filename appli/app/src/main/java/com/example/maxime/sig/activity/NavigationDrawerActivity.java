@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.GeolocationPermissions;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,7 +47,12 @@ public class NavigationDrawerActivity extends AppCompatActivity
         /*Parametrage de la WebView*/
 
         myWebView = (WebView) findViewById(R.id.webViewID);
-        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.setWebChromeClient(new WebChromeClient() {
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                callback.invoke(origin, true, false);
+            }
+        });
+        //myWebView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -212,7 +219,5 @@ public class NavigationDrawerActivity extends AppCompatActivity
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
-
 
 }

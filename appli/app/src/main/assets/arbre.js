@@ -27,7 +27,7 @@ var longitude= parseFloat(coor[1]);
 
 var view = new ol.View({
                      center: ol.proj.fromLonLat([longitude, latittude]),
-                     zoom: 15
+                     zoom: 17
                    });
  var map = new ol.Map({
         target: 'map',
@@ -61,8 +61,6 @@ var view = new ol.View({
                 $('#id').val(""+id);
                 $('#basicModal').modal('show');
             }
-            //InfoSelection.goToTreeActivity(id);
-   //      document.getElementById('info').innerHTML = html;
        });
    }
  });
@@ -73,8 +71,66 @@ function uploadPhoto() {
     InfoSelection.goToTreeActivity(id);
  }
 
+
+ // Objet géographique de la position de géolocalisation
+ 	var ObjPosition = new ol.Feature();
+ 	// Attribution d'un style à l'objet
+ 	ObjPosition.setStyle(new ol.style.Style({
+ 		image: new ol.style.Circle({
+ 			radius: 6,
+ 			fill: new ol.style.Fill({
+ 				color: '#3399CC'
+ 			}),
+ 			stroke: new ol.style.Stroke({
+ 				color: '#fff',
+ 				width: 2
+ 			})
+ 		})
+ 	}));
+ 	// Géolocalisation
+ 	var geolocation = new ol.Geolocation({
+ 	  enableHighAccuracy: true,
+ 	  // On déclenche la géolocalisation
+ 	  tracking: true,
+ 	  // Important : Projection de la carte
+ 	  projection: view.getProjection()
+ 	});
+ 	// On scrute les changements des propriétés
+ 	geolocation.on('change:position', function(evt) {
+ 	    console.log("La geoloc a changé "+geolocation.getPosition());
+ 		var position = geolocation.getPosition();
+ 		// On transforme la projection des coordonnées
+ 		var newPosition=ol.proj.transform(position, 'EPSG:3857','EPSG:4326');
+ 		// Attribution de la géométrie de ObjPosition avec les coordonnées de la position
+ 		ObjPosition.setGeometry( position ? new ol.geom.Point(position) : null );
+ 	});
+
+ 	var precisionFeature = new ol.Feature();
+ 	geolocation.on('change:accuracyGeometry', function(evt){
+        console.log("La geoloc a changé "+geolocation.getAccuracyGeometry());
+        precisionFeature.setGeometry(geolocation.getAccuracyGeometry());
+ 	});
+ 	// On alerte si une erreur est trouvée
+ 	geolocation.on('error', function(erreur) {
+ 		console.log('Echec de la géolocalisation : ' +erreur.message);
+ 	});
+
+
+ 	// Source du vecteur contenant l'objet géographique
+ 	var sourceVecteur = new ol.source.Vector({
+ 			features: [precisionFeature,ObjPosition]
+ 	});
+
+ 	var pointVectorLayer = new ol.layer.Vector({
+               source: sourceVecteur,
+             });
+
+    map.addLayer(pointVectorLayer);
+
+
 /*ici Point emplacement ajouté avec une nouvelle couche*/
 
+/*
 refreshGPS(); //pour pas attendre 2000 la premeire fois
 var interval = window.setInterval(refreshGPS, 2500);
 
@@ -91,7 +147,8 @@ function refreshGPS(){
          var myStyle = new ol.style.Style({
               image: new ol.style.Circle({
                 radius: 9,
-                fill: new ol.style.Fill({color: 'red'})
+                fill: new ol.style.Fill({color: 'red'}),
+                stroke: new ol.style.Stroke({color: '#fff', width: 2})
               })
             })
 
@@ -113,7 +170,54 @@ function refreshGPS(){
         }
     }
 
+/*var geolocation = new ol.Geolocation({
+  // enableHighAccuracy must be set to true to have the heading value.
+  trackingOptions: {
+    enableHighAccuracy: true
+  },
+  projection: view.getProjection()
+});
 
+geolocation.setTracking(true);
+
+
+// handle geolocation error.
+geolocation.on('error', function(error) {
+
+});
+
+var accuracyFeature = new ol.Feature();
+geolocation.on('change:accuracyGeometry', function() {
+  accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+});
+
+var positionFeature = new ol.Feature();
+positionFeature.setStyle(new ol.Style({
+  image: new ol.CircleStyle({
+    radius: 6,
+    fill: new ol.Style.Fill({
+      color: '#3399CC'
+    }),
+    stroke: new ol.Style.Stroke({
+      color: '#fff',
+      width: 2
+    })
+  })
+}));
+
+geolocation.on('change:position', function() {
+  var coordinates = geolocation.getPosition();
+  positionFeature.setGeometry(coordinates ?
+    new Point(coordinates) : null);
+});
+
+new VectorLayer({
+  map: map,
+  source: new VectorSource({
+    features: [accuracyFeature, positionFeature]
+  })
+});
+*/
 
 
 

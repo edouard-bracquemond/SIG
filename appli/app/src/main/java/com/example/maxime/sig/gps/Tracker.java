@@ -57,7 +57,7 @@ public class Tracker implements LocationListener {
                          10,
                          this);
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                Log.i("TAG",location.getLatitude()+""+location.getLongitude());
+                Log.i("TAG",location.getLatitude()+" "+location.getLongitude());
             }else if (isGPSEnabled){
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,

@@ -1,6 +1,7 @@
 package com.example.maxime.sig.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -21,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.maxime.sig.api.Api;
 import com.example.maxime.sig.R;
@@ -205,6 +207,11 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
             @Override
             public void onResponse(Call call, Response response) {
 
+                if (response.isSuccessful()){
+                    Context c = getApplicationContext();
+                    Toast toast = Toast.makeText(c, "Upload reussi",  Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
 
             @Override
