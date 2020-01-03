@@ -51,7 +51,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.txtTitle.setText(dataList.get(position).getSaison());
+        Picture picture = dataList.get(position);
+        holder.txtTitle.setText(picture.getSaison() + "\npublié par: "+picture.getPseudo());
 
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));

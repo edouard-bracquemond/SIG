@@ -7,6 +7,7 @@ public class Picture {
     private String location;
     private String saison;
     private String url;
+    private String pseudo;
 
 
     public int getId() {
@@ -39,6 +40,14 @@ public class Picture {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 
     @Override
