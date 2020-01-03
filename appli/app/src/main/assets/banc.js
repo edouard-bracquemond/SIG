@@ -50,6 +50,34 @@ var map = new ol.Map({
       });
 
 
+ map.on('singleclick', function(evt) {
+ //  document.getElementById('info').innerHTML = '';
+   var viewResolution = /** @type {number} */ (view.getResolution());
+   var url = wmsSource.getFeatureInfoUrl(
+     evt.coordinate, viewResolution, 'EPSG:3857',
+     {'INFO_FORMAT': 'application/json'});
+   if (url) {
+     fetch(url)
+       .then(function (response) { return response.text(); })
+       .then(function (html) {
+            var obj = JSON.parse(html);
+            var id = 0;
+            if ( (obj['features']).length != 0){
+                id = (obj['features'][0]['properties']['gid']);
+                banc_detail = (obj['features'][0]['properties']['banc_detail']);
+                banc_remarq = (obj['features'][0]['properties']['banc_remarq']);
+                banc_secteu = (obj['features'][0]['properties']['banc_secteu']);
+                $('.modal-title').html("Banc")
+                $('#data').html("Detail: " + banc_detail+ "<br> Remarque: " + banc_remarq + "<br> Secteur: " + banc_secteu);
+                $('#id').val(""+id);
+                $('#basicModal').modal('show');
+            }
+       });
+   }
+ });
+
+
+
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();
  	// Attribution d'un style à l'objet

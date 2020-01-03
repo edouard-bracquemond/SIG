@@ -33,6 +33,37 @@ var view = new ol.View({
         view: view
       });
 
+ map.on('singleclick', function(evt) {
+ //  document.getElementById('info').innerHTML = '';
+   var viewResolution = /** @type {number} */ (view.getResolution());
+   var url = wmsSource.getFeatureInfoUrl(
+     evt.coordinate, viewResolution, 'EPSG:3857',
+     {'INFO_FORMAT': 'application/json'});
+   if (url) {
+     fetch(url)
+       .then(function (response) { return response.text(); })
+       .then(function (html) {
+            var obj = JSON.parse(html);
+            var id = 0;
+            if ( (obj['features']).length != 0){
+                id = (obj['features'][0]['properties']['gid']);
+                corbeille_t = (obj['features'][0]['properties']['corbeille_t']);
+                corbeille_l = (obj['features'][0]['properties']['corbeille_l']);
+                corbeille_s = (obj['features'][0]['properties']['corbeille_s']);
+                corbeille_r = (obj['features'][0]['properties']['corbeille_r']);
+                corbeille_f = (obj['features'][0]['properties']['corbeille_f']);
+                $('.modal-title').html("Corbeille")
+                $('#data').html("Type: " + corbeille_t+ "<br> Rue: " + corbeille_l + "<br> Secteur: " + corbeille_s +
+                   "<br> Ramassage: " + corbeille_f );
+
+                $('#id').val(""+id);
+                $('#basicModal').modal('show');
+            }
+       });
+   }
+ });
+
+
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();
  	// Attribution d'un style à l'objet

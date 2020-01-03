@@ -2,13 +2,14 @@
 	source: new ol.source.OSM()
 });
 
-var wms_layer = new ol.layer.Tile({
-          source: new ol.source.TileWMS({
+var wmsSource = new ol.source.TileWMS({
             url: 'https://psigo.beta9.ovh/geoserver/wms',
             params: {'LAYERS': 'sigo:dechets_pav', 'TILED': true},
             serverType: 'geoserver',
             transition: 0
-          })
+	});
+var wms_layer = new ol.layer.Tile({
+          source: wmsSource
 	});
 
 var layers = [
@@ -32,6 +33,32 @@ var view = new ol.View({
         layers: layers,
         view: view
       });
+
+ map.on('singleclick', function(evt) {
+ //  document.getElementById('info').innerHTML = '';
+   var viewResolution = /** @type {number} */ (view.getResolution());
+   var url = wmsSource.getFeatureInfoUrl(
+     evt.coordinate, viewResolution, 'EPSG:3857',
+     {'INFO_FORMAT': 'application/json'});
+   if (url) {
+     fetch(url)
+       .then(function (response) { return response.text(); })
+       .then(function (html) {
+            var obj = JSON.parse(html);
+            var id = 0;
+            if ( (obj['features']).length != 0){
+                id = (obj['features'][0]['properties']['gid']);
+                type_flux = (obj['features'][0]['properties']['type_flux']);
+                rue = (obj['features'][0]['properties']['rue']);
+                $('.modal-title').html("Dechet")
+                $('#data').html("Type: " + type_flux+ "<br> Rue: " + rue);
+
+                $('#id').val(""+id);
+                $('#basicModal').modal('show');
+            }
+       });
+   }
+ });
 
 // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();
