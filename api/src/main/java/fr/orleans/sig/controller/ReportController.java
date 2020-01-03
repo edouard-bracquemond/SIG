@@ -4,7 +4,10 @@ import fr.orleans.sig.exception.ResourceNotFoundException;
 import fr.orleans.sig.model.geo.Banc;
 import fr.orleans.sig.model.sig.Equipement;
 import fr.orleans.sig.model.sig.Report;
+import fr.orleans.sig.model.user.User;
 import fr.orleans.sig.repository.*;
+import fr.orleans.sig.security.CurrentUser;
+import fr.orleans.sig.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,8 @@ public class ReportController {
     private DechetsRepository dechetsRepository;
     @Autowired
     private ReportRepository reportRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/reports/")
     public ResponseEntity<?> getReports(@RequestParam(value = "eq")Equipement equipement,
@@ -36,7 +41,11 @@ public class ReportController {
     @PostMapping(value = "/reports")
     public ResponseEntity<?> addReports(@RequestParam(value = "comment") String commentaire,
                                         @RequestParam(value = "eq") Equipement equipement,
-                                        @RequestParam(value = "id_eq") int id){
+                                        @RequestParam(value = "id_eq") int id,
+                                        @CurrentUser UserPrincipal currentUser){
+
+        User user = userRepository.getOne(currentUser.getId());
+
 
         switch (equipement){
             case BANC:{
@@ -51,6 +60,8 @@ public class ReportController {
         report.setComment(commentaire);
         report.setType(equipement);
         report.setIdEquipement((long) id);
+        report.setUser(user);
+        report.setPseudo(user.getUsername());
 
         reportRepository.save(report);
 

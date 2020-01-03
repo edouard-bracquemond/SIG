@@ -1,5 +1,8 @@
 package fr.orleans.sig.model.sig;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.orleans.sig.model.user.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +13,10 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private Equipement type;
     private Long idEquipement;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    private String pseudo;
 
 
     public Report(){}
@@ -44,5 +51,22 @@ public class Report {
 
     public void setIdEquipement(Long idEquipement) {
         this.idEquipement = idEquipement;
+    }
+
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 }

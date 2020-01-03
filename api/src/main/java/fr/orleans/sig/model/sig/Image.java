@@ -2,6 +2,7 @@ package fr.orleans.sig.model.sig;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.orleans.sig.model.geo.Arbres;
+import fr.orleans.sig.model.user.User;
 
 import javax.persistence.*;
 
@@ -16,6 +17,10 @@ public class Image {
     private String url;
     @OneToOne
     private Arbres arbre;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    private String pseudo;
 
     public Image(){}
 
@@ -58,5 +63,22 @@ public class Image {
 
     public void setArbre(Arbres arbre) {
         this.arbre = arbre;
+    }
+
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 }
