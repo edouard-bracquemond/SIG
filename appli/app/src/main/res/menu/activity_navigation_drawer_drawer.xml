@@ -26,13 +26,6 @@
             android:title="Dechet" />
     </group>
 
-    <item android:title="Autres">
-        <menu>
-            <item
-                android:id="@+id/photoID"
 
-                android:title="Photo" />
-        </menu>
-    </item>
 
 </menu>
