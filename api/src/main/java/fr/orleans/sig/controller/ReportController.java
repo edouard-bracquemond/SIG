@@ -54,6 +54,24 @@ public class ReportController {
                 }
                 break;
             }
+            case CORBEILLE:{
+                if (!corbeillesRepository.existsById(id)){
+                    throw new ResourceNotFoundException("equipement", "id", id);
+                }
+                break;
+            }
+            case SANITAIRE:{
+                if (!sanitairesRepostiory.existsById(id)){
+                    throw new ResourceNotFoundException("equipement", "id", id);
+                }
+                break;
+            }
+            case DECHET:{
+                if (!dechetsRepository.existsById(id)){
+                    throw new ResourceNotFoundException("equipement", "id", id);
+                }
+                break;
+            }
         }
 
         Report report = new Report();

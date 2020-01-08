@@ -78,12 +78,12 @@ var map = new ol.Map({
 
 function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToTreeActivity(id);
+    //InfoSelection.gotoReportActivity("Banc",id);
 }
 
 function signalements() {
     var id = $('#id').val();
-    InfoSelection.goToTreePicturesActivity(id);
+    InfoSelection.gotoReportActivity("Banc",id);
 }
 
  // Objet géographique de la position de géolocalisation

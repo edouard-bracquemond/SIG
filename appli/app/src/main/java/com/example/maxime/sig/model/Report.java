@@ -4,10 +4,10 @@ package com.example.maxime.sig.model;
 
 public class Report {
     private int id;
-    private int userId;
-    private int equipmentId;
     private String comment;
-
+    private String type;
+    private int idEquipement;
+    private String pseudo;
 
     public int getId() {
         return id;
@@ -15,22 +15,6 @@ public class Report {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getEquipmentId() {
-        return equipmentId;
-    }
-
-    public void setEquipmentId(int equipmentId) {
-        this.equipmentId = equipmentId;
     }
 
     public String getComment() {
@@ -41,8 +25,27 @@ public class Report {
         this.comment = comment;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
+    public int getIdEquipement() {
+        return idEquipement;
+    }
 
+    public void setIdEquipement(int idEquipement) {
+        this.idEquipement = idEquipement;
+    }
 
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
 }

@@ -3,6 +3,7 @@ package com.example.maxime.sig.api;
 
 import com.example.maxime.sig.model.AccessToken;
 import com.example.maxime.sig.model.Picture;
+import com.example.maxime.sig.model.Report;
 import com.example.maxime.sig.model.User;
 
 import java.util.List;
@@ -44,6 +45,13 @@ public interface Api {
     @GET("/tree/images/")
     Call<List<Picture>>pictureList(
             @Header("Authorization") String authorization,
+            @Query("id") int id
+    );
+
+    @GET("/reports/")
+    Call<List<Report>>reportList(
+            @Header("Authorization") String authorization,
+            @Query("eq") String eq,
             @Query("id") int id
     );
 
