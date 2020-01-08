@@ -138,6 +138,17 @@ function signalements() {
     var id = $('#id').val();
     InfoSelection.gotoReportActivity(type_eq,id);
 }
+
+function uploadPhoto() {
+    var id = $('#id').val();
+    InfoSelection.goToTreeActivity(id);
+}
+
+function photos() {
+    var id = $('#id').val();
+    InfoSelection.goToTreePicturesActivity(id);
+}
+
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();
  	// Attribution d'un style à l'objet
