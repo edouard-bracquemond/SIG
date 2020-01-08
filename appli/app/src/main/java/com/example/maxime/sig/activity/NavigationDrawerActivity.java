@@ -102,13 +102,50 @@ public class NavigationDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            item.setChecked(!item.isChecked());
-            if (item.isChecked()){
-                Toast.makeText(this, "ça marche", Toast.LENGTH_LONG).show();
+        switch (id) {
+            case R.id.arbreID: {
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) {
+                    myWebView.loadUrl("file:///android_asset/arbre.html");
+                    getSupportActionBar().setTitle("Les arbres de l'agglo");
+                }
+                break;
             }
-            return true;
+            case R.id.bancID: {
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) {
+                    myWebView.loadUrl("file:///android_asset/banc.html");
+                    getSupportActionBar().setTitle("Les bancs de l'agglo");
+                }
+                break;
+            }
+            case R.id.corbeilleID: {
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) {
+                    myWebView.loadUrl("file:///android_asset/corbeille.html");
+                    getSupportActionBar().setTitle("Les poubelles de l'agglo");
+                }
+                break;
+            }
+            case R.id.sanitaireID: {
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) {
+                    myWebView.loadUrl("file:///android_asset/sanitaire.html");
+                    getSupportActionBar().setTitle("Les sanitaires de l'agglo");
+                }
+                break;
+            }
+            case R.id.dechetID: {
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) {
+                    myWebView.loadUrl("file:///android_asset/dechet.html");
+                    getSupportActionBar().setTitle("Le recyclage de l'agglo");
+                }
+                break;
+            }
         }
+
+
         if (id == R.id.action_logout){
             logout();
             Intent intent = new Intent(this, LoginActivity.class);
