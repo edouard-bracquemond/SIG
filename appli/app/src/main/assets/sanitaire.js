@@ -65,12 +65,12 @@ var map = new ol.Map({
  });
 function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToSignalerActivity("Banc",id);
+    InfoSelection.goToSignalerActivity("Sanitaire",id);
 }
 
 function signalements() {
     var id = $('#id').val();
-    InfoSelection.goToTreePicturesActivity(id);
+    InfoSelection.gotoReportActivity("Sanitaire",id);
 }
 // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();

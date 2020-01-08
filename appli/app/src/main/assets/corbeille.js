@@ -65,12 +65,12 @@ var view = new ol.View({
 
 function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToSignalerActivity("Banc",id);
+    InfoSelection.goToSignalerActivity("Corbeille",id);
 }
 
 function signalements() {
     var id = $('#id').val();
-    InfoSelection.goToTreePicturesActivity(id);
+    InfoSelection.gotoReportActivity("Corbeille",id);
 }
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();

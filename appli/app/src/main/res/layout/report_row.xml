@@ -20,7 +20,6 @@
             android:layout_toRightOf="@+id/coverImage"
             android:layout_marginLeft="16dp"
             android:paddingTop="20dp"
-            android:lines="2"
             android:text="title" />
 
     </RelativeLayout>
