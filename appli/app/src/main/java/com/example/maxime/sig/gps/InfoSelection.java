@@ -6,6 +6,7 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.example.maxime.sig.activity.ReportActivity;
+import com.example.maxime.sig.activity.SignalerActivity;
 import com.example.maxime.sig.activity.TreeActivity;
 import com.example.maxime.sig.activity.TreePicturesActivity;
 
@@ -52,6 +53,18 @@ public class InfoSelection {
     public void gotoReportActivity(String eq, String idEq){
         int id =  Integer.parseInt(idEq);
         Intent intent = new Intent(mContext, ReportActivity.class);
+        intent.putExtra("eq", eq);
+        intent.putExtra("id", id);
+        if (id!=0){
+            mContext.startActivity(intent);
+        }
+    }
+
+    @JavascriptInterface
+    public void  goToSignalerActivity(String eq ,String idEq){
+
+        int id =  Integer.parseInt(idEq);
+        Intent intent = new Intent(mContext, SignalerActivity.class);
         intent.putExtra("eq", eq);
         intent.putExtra("id", id);
         if (id!=0){

@@ -65,7 +65,7 @@ var map = new ol.Map({
  });
 function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToTreeActivity(id);
+    InfoSelection.goToSignalerActivity("Banc",id);
 }
 
 function signalements() {

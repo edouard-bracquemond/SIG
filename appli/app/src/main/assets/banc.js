@@ -27,17 +27,7 @@ var coor=coordonnee.split(' ');
 var latittude= parseFloat(coor[0]);
 var longitude= parseFloat(coor[1]);
 
-/*
- var map = new ol.Map({
-        target: 'map',
-        layers: layers,
-        view: new ol.View({
-          center: ol.proj.fromLonLat([longitude, latittude]),
-          zoom: 15
-        })
-      });
 
-*/
 
 var view = new ol.View({
                      center: ol.proj.fromLonLat([longitude, latittude]),
@@ -78,7 +68,7 @@ var map = new ol.Map({
 
 function signaler() {
     var id = $('#id').val();
-    //InfoSelection.gotoReportActivity("Banc",id);
+    InfoSelection.goToSignalerActivity("Banc",id);
 }
 
 function signalements() {

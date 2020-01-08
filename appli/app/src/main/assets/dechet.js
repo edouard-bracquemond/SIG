@@ -61,7 +61,7 @@ var view = new ol.View({
  });
 function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToTreeActivity(id);
+    InfoSelection.goToSignalerActivity("Banc",id);
 }
 
 function signalements() {
