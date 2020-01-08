@@ -161,7 +161,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
             }
             case R.id.dechetID:{
                 myWebView.loadUrl("file:///android_asset/dechet.html");
-                getSupportActionBar().setTitle("Les ??? de l'agglo");
+                getSupportActionBar().setTitle("Le recyclage de l'agglo");
                 break;
             }
             case R.id.photoID:{
