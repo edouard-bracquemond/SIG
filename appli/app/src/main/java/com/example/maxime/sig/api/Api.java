@@ -9,6 +9,7 @@ import com.example.maxime.sig.model.User;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -27,6 +28,14 @@ public interface Api {
     Call<User> createUser(
       @Body User User
     );
+    @POST("/reports")
+    Call<Report>createReport(
+        @Header("Authorization") String authorization,
+        @Query("comment") String comment,
+        @Query("eq") String type,
+        @Query("id_eq") int idEquipement
+
+    );
     @POST("/api/auth/signin")
     Call<AccessToken> login(
       @Body User user
@@ -35,12 +44,13 @@ public interface Api {
     @POST("tree/image/")
     Call<ResponseBody>uploadPicture(
 
-                                    @Header("Authorization") String authorization,
-                                    @Query("id") int id,
-                                    @Part MultipartBody.Part file,
-                                    @Part("saison") RequestBody saison
+            @Header("Authorization") String authorization,
+            @Query("id") int id,
+            @Part MultipartBody.Part file,
+            @Part("saison") RequestBody saison
 
-    );
+
+            );
 
     @GET("/tree/images/")
     Call<List<Picture>>pictureList(
@@ -54,5 +64,7 @@ public interface Api {
             @Query("eq") String eq,
             @Query("id") int id
     );
+
+
 
 }
