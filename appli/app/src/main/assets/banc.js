@@ -57,6 +57,8 @@ var map = new ol.Map({
                 banc_detail = (obj['features'][0]['properties']['banc_detail']);
                 banc_remarq = (obj['features'][0]['properties']['banc_remarq']);
                 banc_secteu = (obj['features'][0]['properties']['banc_secteu']);
+
+
                 $('.modal-title').html("Banc")
                 $('#data').html("Detail: " + banc_detail+ "<br> Remarque: " + banc_remarq + "<br> Secteur: " + banc_secteu);
                 $('#id').val(""+id);

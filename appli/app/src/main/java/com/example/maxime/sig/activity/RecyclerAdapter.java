@@ -1,8 +1,8 @@
 package com.example.maxime.sig.activity;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+        import android.support.annotation.NonNull;
+        import android.support.v7.widget.RecyclerView;
+        import android.view.ViewGroup;
 
 public class RecyclerAdapter extends RecyclerView.Adapter {
     @NonNull

@@ -32,7 +32,7 @@ var view = new ol.View({
         layers: layers,
         view: view
       });
-
+var type_eq ="";
  map.on('singleclick', function(evt) {
  //  document.getElementById('info').innerHTML = '';
    var viewResolution = /** @type {number} */ (view.getResolution());
@@ -78,32 +78,47 @@ var view = new ol.View({
                     $('#data').html("Type: " + corbeille_t+ "<br> Rue: " + corbeille_l + "<br> Secteur: " + corbeille_s +
                         "<br> Ramassage: " + corbeille_f );
                     $('#id').val(""+id);
+
+                    $('.modal-footer').html("<button type='button' id='signaler' onClick='signaler()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signaler</button><button type='button' id='signalements' onClick='signalements()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signalements</button><button type='button' class='btn btn-default' data-dismiss='modal'><i class='fa fa-close'></i> Fermer</button>");
                     $('#basicModal').modal('show');
+                    type_eq = "Corbeille";
                 }
                 if(type_flux != null){ // on clique sur un dechet
                     $('.modal-title').html("Dechet")
                     $('#data').html("Type: " + type_flux+ "<br> Rue: " + rue);
                     $('#id').val(""+id);
+                    $('.modal-footer').html("<button type='button' id='signaler' onClick='signaler()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signaler</button><button type='button' id='signalements' onClick='signalements()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signalements</button><button type='button' class='btn btn-default' data-dismiss='modal'><i class='fa fa-close'></i> Fermer</button>");
+
                     $('#basicModal').modal('show');
+                    type_eq="Dechet";
                 }
                 if(banc_detail != null){  // on clique sur un banc
                     $('.modal-title').html("Banc")
                     $('#data').html("Detail: " + banc_detail+ "<br> Remarque: " + banc_remarq + "<br> Secteur: " + banc_secteu);
                     $('#id').val(""+id);
+                    $('.modal-footer').html("<button type='button' id='signaler' onClick='signaler()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signaler</button><button type='button' id='signalements' onClick='signalements()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signalements</button><button type='button' class='btn btn-default' data-dismiss='modal'><i class='fa fa-close'></i> Fermer</button>");
+
                     $('#basicModal').modal('show');
+                    type_eq="Banc";
                 }
                 if(san_gest != null){  // on clique sur un sanitaire
                      $('.modal-title').html("Sanitaire")
                      $('#data').html("Gestionnaire: " + san_gest+ "<br> Horaire: " + san_horaire + "<br> Secteur: " + san_sect +
                        "<br> Handicapé: " + san_handi);
                       $('#id').val(""+id);
+                      $('.modal-footer').html("<button type='button' id='signaler' onClick='signaler()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signaler</button><button type='button' id='signalements' onClick='signalements()' class='btn btn-default'><i class='fa fa-exclamation-circle'></i> Signalements</button><button type='button' class='btn btn-default' data-dismiss='modal'><i class='fa fa-close'></i> Fermer</button>");
+
                       $('#basicModal').modal('show');
+                      type_eq = "Sanitaire";
                 }
                 if(type != null) { //on clique sur un arbre
                     $('.modal-title').html("Arbre de type "+type)
                     $('#data').html("Genre: "+genre+"<br> Espèce: "+espece+"<br>Variété: "+variete);
                     $('#id').val(""+id);
+                    $('.modal-footer').html("<button type='button' id='upload' onClick='uploadPhoto()' class='btn btn-default'><i class='fa fa-upload'></i> Upload</button><button type='button' id='photos' onClick='photos()' class='btn btn-default'><i class='fa fa-image'></i> Photos</button><button type='button' class='btn btn-default' data-dismiss='modal'><i class='fa fa-close'></i> Fermer</button>");
+
                     $('#basicModal').modal('show');
+
                 }
             }
        });
@@ -112,12 +127,13 @@ var view = new ol.View({
 
 function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToSignalerActivity("Corbeille",id);
+
+    InfoSelection.goToSignalerActivity(type_eq,id);
 }
 
 function signalements() {
     var id = $('#id').val();
-    InfoSelection.gotoReportActivity("Corbeille",id);
+    InfoSelection.gotoReportActivity(type_eq,id);
 }
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();

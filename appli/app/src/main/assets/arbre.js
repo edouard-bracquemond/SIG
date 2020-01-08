@@ -56,10 +56,12 @@ var view = new ol.View({
                 genre = (obj['features'][0]['properties']['genre']);
                 espece = (obj['features'][0]['properties']['espece']);
                 variete = (obj['features'][0]['properties']['variete']);
+
                 $('.modal-title').html("Arbre de type "+type)
                 $('#data').html("Genre: "+genre+"<br> Espèce: "+espece+"<br>Variété: "+variete);
                 $('#id').val(""+id);
                 $('#basicModal').modal('show');
+
             }
        });
    }
