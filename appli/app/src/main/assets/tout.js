@@ -2,9 +2,12 @@
 	source: new ol.source.OSM()
 });
 
+var couches = InfoSelection.getCouches();
+console.log(couches)
+
 var wmsSource = new ol.source.TileWMS({
             url: 'https://psigo.beta9.ovh/geoserver/wms',
-            params: {'LAYERS': 'sigo:tout', 'TILED': true},
+            params: {'LAYERS': couches, 'TILED': true},
             serverType: 'geoserver',
             transition: 0
 	});

@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.GeolocationPermissions;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -63,8 +64,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
         myWebView.addJavascriptInterface(new InfoSelection(this),"InfoSelection");
         GPSJScript gpsjScript= new GPSJScript(getApplicationContext());
 
-        myWebView.loadUrl("file:///android_asset/arbre.html");
-        getSupportActionBar().setTitle("Les arbres de l'agglo");
+        myWebView.loadUrl("file:///android_asset/tout.html");
+        getSupportActionBar().setTitle("Les espaces verts");
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -106,41 +107,51 @@ public class NavigationDrawerActivity extends AppCompatActivity
             case R.id.arbreID: {
                 item.setChecked(!item.isChecked());
                 if (item.isChecked()) {
-                    myWebView.loadUrl("file:///android_asset/arbre.html");
-                    getSupportActionBar().setTitle("Les arbres de l'agglo");
+                    InfoSelection.addCouche("sigo:espace_publicev_arbres");
+                }else{
+                    InfoSelection.remove("sigo:espace_publicev_arbres");
                 }
+                myWebView.loadUrl("file:///android_asset/tout.html");
                 break;
             }
             case R.id.bancID: {
                 item.setChecked(!item.isChecked());
                 if (item.isChecked()) {
-                    myWebView.loadUrl("file:///android_asset/banc.html");
-                    getSupportActionBar().setTitle("Les bancs de l'agglo");
+                    InfoSelection.addCouche("sigo:espace_public_ev_banc");
+                }else{
+                    InfoSelection.remove("sigo:espace_public_ev_banc");
                 }
+                myWebView.loadUrl("file:///android_asset/tout.html");
                 break;
             }
             case R.id.corbeilleID: {
                 item.setChecked(!item.isChecked());
                 if (item.isChecked()) {
-                    myWebView.loadUrl("file:///android_asset/corbeille.html");
-                    getSupportActionBar().setTitle("Les poubelles de l'agglo");
+                    InfoSelection.addCouche("sigo:espace_public_ev_corbeilles");
+                }else{
+                    InfoSelection.remove("sigo:espace_public_ev_corbeilles");
                 }
+                myWebView.loadUrl("file:///android_asset/tout.html");
                 break;
             }
             case R.id.sanitaireID: {
                 item.setChecked(!item.isChecked());
                 if (item.isChecked()) {
-                    myWebView.loadUrl("file:///android_asset/sanitaire.html");
-                    getSupportActionBar().setTitle("Les sanitaires de l'agglo");
+                    InfoSelection.addCouche("sigo:espace_public_ev_sanitaires");
+                }else{
+                    InfoSelection.remove("sigo:espace_public_ev_sanitaires");
                 }
+                myWebView.loadUrl("file:///android_asset/tout.html");
                 break;
             }
             case R.id.dechetID: {
                 item.setChecked(!item.isChecked());
                 if (item.isChecked()) {
-                    myWebView.loadUrl("file:///android_asset/dechet.html");
-                    getSupportActionBar().setTitle("Le recyclage de l'agglo");
+                    InfoSelection.addCouche("sigo:dechets_pav");
+                }else{
+                    InfoSelection.remove("sigo:dechets_pav");
                 }
+                myWebView.loadUrl("file:///android_asset/tout.html");
                 break;
             }
         }

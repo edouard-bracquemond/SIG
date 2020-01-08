@@ -10,8 +10,12 @@ import com.example.maxime.sig.activity.SignalerActivity;
 import com.example.maxime.sig.activity.TreeActivity;
 import com.example.maxime.sig.activity.TreePicturesActivity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class InfoSelection {
     Context mContext;
+    static Set<String> couches = new HashSet<String>();;
     public InfoSelection(Context c)
     {
         mContext = c;
@@ -70,6 +74,24 @@ public class InfoSelection {
         if (id!=0){
             mContext.startActivity(intent);
         }
+    }
+
+    public static void addCouche(String couche){
+        couches.add(couche);
+    }
+
+    public static void remove(String couche){
+        couches.remove(couche);
+    }
+
+    @JavascriptInterface
+    public String getCouches(){
+        if (couches.size()>0){
+            String c = ((couches.toString()).substring(1, (couches.toString().length())-1))
+                    .replaceAll(" ", "");
+            return c;
+        }
+        return "sigo:espace_publicev_arbres,sigo:dechets_pav";
     }
 
 }
