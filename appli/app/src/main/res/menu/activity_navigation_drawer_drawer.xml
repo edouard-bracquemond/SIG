@@ -23,7 +23,7 @@
         <item
             android:id="@+id/dechetID"
 
-            android:title="Dechet" />
+            android:title="Recyclage" />
     </group>
 
 
