@@ -1,12 +1,14 @@
-var osm_layer = new ol.layer.Tile({
+ var osm_layer = new ol.layer.Tile({
 	source: new ol.source.OSM()
 });
+
 var wmsSource = new ol.source.TileWMS({
-                                url: 'https://psigo.beta9.ovh/geoserver/wms',
-                                params: {'LAYERS': 'sigo:tout', 'TILED': true},
-                                serverType: 'geoserver',
-                                transition: 0
-                              });
+            url: 'https://psigo.beta9.ovh/geoserver/wms',
+            params: {'LAYERS': 'sigo:tout', 'TILED': true},
+            serverType: 'geoserver',
+            transition: 0
+	});
+
 var wms_layer = new ol.layer.Tile({
           source: wmsSource
 	});
@@ -15,14 +17,10 @@ var layers = [
 	osm_layer,
 		wms_layer
 ];
-
 var coordonnee = GPS.getFromAndroid();
 var coor=coordonnee.split(' ');
 var latittude= parseFloat(coor[0]);
 var longitude= parseFloat(coor[1]);
-
-
-
 
 
 var view = new ol.View({
@@ -34,9 +32,6 @@ var view = new ol.View({
         layers: layers,
         view: view
       });
-
-
-
 
  map.on('singleclick', function(evt) {
  //  document.getElementById('info').innerHTML = '';
@@ -52,31 +47,78 @@ var view = new ol.View({
             var id = 0;
             if ( (obj['features']).length != 0){
                 id = (obj['features'][0]['properties']['gid']);
+                //corbeille
+                corbeille_t = (obj['features'][0]['properties']['corbeille_t']);
+                corbeille_l = (obj['features'][0]['properties']['corbeille_l']);
+                corbeille_s = (obj['features'][0]['properties']['corbeille_s']);
+                corbeille_r = (obj['features'][0]['properties']['corbeille_r']);
+                corbeille_f = (obj['features'][0]['properties']['corbeille_f']);
+                //dechet
+                type_flux = (obj['features'][0]['properties']['type_flux']);
+                rue = (obj['features'][0]['properties']['rue']);
+                //sanitaire
+                san_gest = (obj['features'][0]['properties']['san_gest']);
+                san_horaire = (obj['features'][0]['properties']['san_horaire']);
+                san_sect = (obj['features'][0]['properties']['san_sect']);
+                san_remarq = (obj['features'][0]['properties']['san_remarq']);
+                san_handi = (obj['features'][0]['properties']['san_handi']);
+                //banc
+                banc_detail = (obj['features'][0]['properties']['banc_detail']);
+                banc_remarq = (obj['features'][0]['properties']['banc_remarq']);
+                banc_secteu = (obj['features'][0]['properties']['banc_secteu']);
+                //arbre
                 type = (obj['features'][0]['properties']['type']);
                 genre = (obj['features'][0]['properties']['genre']);
                 espece = (obj['features'][0]['properties']['espece']);
                 variete = (obj['features'][0]['properties']['variete']);
-                $('.modal-title').html("Arbre de type "+type)
-                $('#data').html("Genre: "+genre+"<br> Espèce: "+espece+"<br>Variété: "+variete);
-                $('#id').val(""+id);
-                $('#basicModal').modal('show');
+
+
+                if(corbeille_t != null){ // on clique sur une corbeille
+                    $('.modal-title').html("Corbeille")
+                    $('#data').html("Type: " + corbeille_t+ "<br> Rue: " + corbeille_l + "<br> Secteur: " + corbeille_s +
+                        "<br> Ramassage: " + corbeille_f );
+                    $('#id').val(""+id);
+                    $('#basicModal').modal('show');
+                }
+                if(type_flux != null){ // on clique sur un dechet
+                    $('.modal-title').html("Dechet")
+                    $('#data').html("Type: " + type_flux+ "<br> Rue: " + rue);
+                    $('#id').val(""+id);
+                    $('#basicModal').modal('show');
+                }
+                if(banc_detail != null){  // on clique sur un banc
+                    $('.modal-title').html("Banc")
+                    $('#data').html("Detail: " + banc_detail+ "<br> Remarque: " + banc_remarq + "<br> Secteur: " + banc_secteu);
+                    $('#id').val(""+id);
+                    $('#basicModal').modal('show');
+                }
+                if(san_gest != null){  // on clique sur un sanitaire
+                     $('.modal-title').html("Sanitaire")
+                     $('#data').html("Gestionnaire: " + san_gest+ "<br> Horaire: " + san_horaire + "<br> Secteur: " + san_sect +
+                       "<br> Handicapé: " + san_handi);
+                      $('#id').val(""+id);
+                      $('#basicModal').modal('show');
+                }
+                if(type != null) { //on clique sur un arbre
+                    $('.modal-title').html("Arbre de type "+type)
+                    $('#data').html("Genre: "+genre+"<br> Espèce: "+espece+"<br>Variété: "+variete);
+                    $('#id').val(""+id);
+                    $('#basicModal').modal('show');
+                }
             }
        });
    }
  });
 
-
-function uploadPhoto() {
+function signaler() {
     var id = $('#id').val();
-    InfoSelection.goToTreeActivity(id);
+    InfoSelection.goToSignalerActivity("Corbeille",id);
 }
 
-function photos() {
+function signalements() {
     var id = $('#id').val();
-    InfoSelection.goToTreePicturesActivity(id);
+    InfoSelection.gotoReportActivity("Corbeille",id);
 }
-
-
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();
  	// Attribution d'un style à l'objet
