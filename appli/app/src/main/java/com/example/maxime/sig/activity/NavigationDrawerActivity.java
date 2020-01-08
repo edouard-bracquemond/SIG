@@ -1,5 +1,6 @@
 package com.example.maxime.sig.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -20,6 +21,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.example.maxime.sig.gps.GPSJScript;
 import com.example.maxime.sig.gps.InfoSelection;
@@ -100,6 +103,10 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            item.setChecked(!item.isChecked());
+            if (item.isChecked()){
+                Toast.makeText(this, "ça marche", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
         if (id == R.id.action_logout){

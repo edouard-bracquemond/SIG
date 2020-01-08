@@ -12,28 +12,23 @@
         <item
             android:id="@+id/bancID"
 
-            android:title="Banc"
-            app:actionLayout="@layout/checkbox"/>
+            android:title="Banc"/>
         <item
             android:id="@+id/corbeilleID"
 
-            android:title="Corbeille"
-            app:actionLayout="@layout/checkbox"/>
+            android:title="Corbeille"/>
         <item
             android:id="@+id/sanitaireID"
 
-            android:title="Sanitaire"
-            app:actionLayout="@layout/checkbox"/>
+            android:title="Sanitaire"/>
         <item
             android:id="@+id/dechetID"
 
-            android:title="Recyclage"
-            app:actionLayout="@layout/checkbox"/>
+            android:title="Recyclage"/>
         <item
             android:id="@+id/toutID"
 
-            android:title="Tout"
-            app:actionLayout="@layout/checkbox"/>
+            android:title="Tout"/>
     </group>
 
 
