@@ -21,17 +21,20 @@
             android:layout_height="wrap_content" />
 
         <Button
+            style="@style/BoutonStyle"
             android:id="@+id/buttonTakePictureID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Prendre une photo" />
 
         <Button
+            style="@style/BoutonStyle"
             android:id="@+id/buttonAddPictureID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Parcourir" />
         <Button
+            style="@style/BoutonStyle"
             android:id="@+id/buttonValidatePictureID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
