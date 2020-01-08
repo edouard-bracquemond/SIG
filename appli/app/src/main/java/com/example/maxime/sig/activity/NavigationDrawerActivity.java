@@ -63,16 +63,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         myWebView.loadUrl("file:///android_asset/arbre.html");
         getSupportActionBar().setTitle("Les arbres de l'agglo");
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -162,6 +153,11 @@ public class NavigationDrawerActivity extends AppCompatActivity
             case R.id.dechetID:{
                 myWebView.loadUrl("file:///android_asset/dechet.html");
                 getSupportActionBar().setTitle("Le recyclage de l'agglo");
+                break;
+            }
+            case R.id.toutID:{
+                myWebView.loadUrl("file:///android_asset/tout.html");
+                getSupportActionBar().setTitle("Tout les élèments de l'agglo");
                 break;
             }
 

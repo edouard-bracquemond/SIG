@@ -24,6 +24,10 @@
             android:id="@+id/dechetID"
 
             android:title="Recyclage" />
+        <item
+            android:id="@+id/toutID"
+
+            android:title="Tout" />
     </group>
 
 
