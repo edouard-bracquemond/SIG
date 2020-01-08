@@ -1,17 +1,22 @@
 package com.example.maxime.sig.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.maxime.sig.R;
 import com.example.maxime.sig.api.Api;
@@ -42,6 +48,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class TreeActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
@@ -94,7 +102,13 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
         validatePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               uploadPhoto();
+                if (photoPath!=null) {
+                    uploadPhoto();
+                }else {
+                    Toast.makeText(TreeActivity.this,
+                            "Photo absente",
+                            Toast.LENGTH_LONG).show();
+                }
 
             }});
     }
@@ -196,6 +210,7 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
 
 
         Api api = retrofit.create(Api.class);
+
         File f= new File(photoPath);
         Log.d("rereifjeifj",photoPathShort);
         SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
@@ -212,17 +227,41 @@ public class TreeActivity extends Activity implements AdapterView.OnItemSelected
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-
                 progressDoalog.dismiss();
+                if (response.code() == 200){
+                    Toast.makeText(TreeActivity.this,
+                            "Upload reussi, merci de votre contribution",
+                            Toast.LENGTH_LONG).show();
+                    Handler myHandler = new Handler();
+                    myHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            gotoTreeActivity();
+                        }
+                    },1000);
+                }else{
+                    Toast.makeText(TreeActivity.this,
+                            "Erreur upload",
+                            Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                progressDoalog.dismiss();
 
+                Toast.makeText(TreeActivity.this,
+                        "Erreur upload",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
+    }
 
+    private void gotoTreeActivity(){
+        Intent i = new Intent(this, NavigationDrawerActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //A B C si D appelle A, B,C,D sont delete
+        startActivity(i);
     }
 
 }
