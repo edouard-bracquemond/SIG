@@ -39,6 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.TreePicturesActivity" />
         <activity android:name=".activity.ReportActivity" />
+        <activity android:name=".activity.SuggestionActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
