@@ -46,67 +46,64 @@ public class SuggestionActivity extends AppCompatActivity {
         buttonSendSuggest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSuggest();
+                if(!editTextSuggest.getText().toString().isEmpty()){
+
+                    String comment = editTextSuggest.getText().toString();
+                    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+                    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("https://psigo.beta9.ovh/")
+                            .client(client)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+
+                    Api api = retrofit.create(Api.class);
+
+
+
+                    SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                    final String token = preferences.getString("token","");
+
+                    //  final Intent intent = getIntent();
+                    Intent intent = getIntent();
+                    String coords = intent.getStringExtra("latitude");
+                    coords = coords+","+intent.getStringExtra("longitude");
+                    Toast toast2 = null;
+                     toast2 = toast2.makeText(getApplicationContext(),coords,Toast.LENGTH_LONG);
+                    toast2.show();
+                    Call call = api.createSuggestion("Bearer "+token,comment,coords);
+                    call.enqueue(new Callback() {
+                        Context context = getApplicationContext();
+                        Toast toast;
+
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            if(response.isSuccessful()){
+
+                                toast = toast.makeText(context,"Ajout réussi",Toast.LENGTH_SHORT);
+                                toast.show();
+                                gotoNagivationDrawerActivity();
+                            }
+                            else{
+                                toast=toast.makeText(context,"Ajout échec",Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+                            toast=toast.makeText(context,"Ajout erreur",Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
+                }
             }
         });
     }
-    private void sendSuggest(){
-        if(!editTextSuggest.getText().toString().isEmpty()){
 
-            String comment = editTextSuggest.getText().toString();
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://psigo.beta9.ovh/")
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-
-            Api api = retrofit.create(Api.class);
-
-
-
-            SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-            final String token = preferences.getString("token","");
-
-          //  final Intent intent = getIntent();
-            Intent intent = getIntent();
-            String coords = intent.getStringExtra("latitude");
-            coords = coords+","+intent.getStringExtra("longitude");
-
-            Call call = api.createSuggestion("Bearer "+token,comment,coords);
-            call.enqueue(new Callback() {
-                Context context = getApplicationContext();
-                Toast toast;
-
-                @Override
-                public void onResponse(Call call, Response response) {
-                    if(response.isSuccessful()){
-
-                        toast = toast.makeText(context,"Ajout réussi",Toast.LENGTH_SHORT);
-                        toast.show();
-                        gotoNagivationDrawerActivity();
-                    }
-                    else{
-                        toast=toast.makeText(context,"Ajout échec",Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    toast=toast.makeText(context,"Ajout erreur",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
-        }
-
-
-
-    }
     private void gotoNagivationDrawerActivity(){
         Intent i = new Intent(this, NavigationDrawerActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //A B C si D appelle A, B,C,D sont delete

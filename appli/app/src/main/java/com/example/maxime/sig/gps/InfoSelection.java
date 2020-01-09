@@ -101,7 +101,7 @@ public class InfoSelection {
 
 
         Intent intent = new Intent(mContext, SuggestionActivity.class);
-        intent.putExtra("latitute", latitude );
+        intent.putExtra("latitude", latitude );
         intent.putExtra("longitude", longitude);
         mContext.startActivity(intent);
 
