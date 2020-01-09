@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.maxime.sig.R;
 import com.example.maxime.sig.api.Api;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,8 +53,12 @@ public class SuggestionActivity extends AppCompatActivity {
         if(!editTextSuggest.getText().toString().isEmpty()){
 
             String comment = editTextSuggest.getText().toString();
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://psigo.beta9.ovh/")
+                    .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -65,7 +71,9 @@ public class SuggestionActivity extends AppCompatActivity {
             final String token = preferences.getString("token","");
 
           //  final Intent intent = getIntent();
-            String coords="";
+            Intent intent = getIntent();
+            String coords = intent.getStringExtra("latitude");
+            coords = coords+","+intent.getStringExtra("longitude");
 
             Call call = api.createSuggestion("Bearer "+token,comment,coords);
             call.enqueue(new Callback() {

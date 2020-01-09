@@ -37,7 +37,7 @@ public interface Api {
         @Query("id_eq") int idEquipement
 
     );
-    @POST("/suggesttions")
+    @POST("/suggestions")
     Call<Suggestion>createSuggestion(
             @Header("Authorization") String authorization,
             @Query("comment") String comment,
