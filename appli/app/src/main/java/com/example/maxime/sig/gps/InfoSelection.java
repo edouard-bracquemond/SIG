@@ -91,7 +91,7 @@ public class InfoSelection {
                     .replaceAll(" ", "");
             return c;
         }
-        return "sigo:espace_publicev_arbres,sigo:dechets_pav";
+        return "sigo:"; //espace_publicev_arbres,sigo:dechets_pav
     }
 
 }

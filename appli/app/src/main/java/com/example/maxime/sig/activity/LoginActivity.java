@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
             Context c = getApplicationContext();
             Toast toast = Toast.makeText(c, token,  Toast.LENGTH_LONG);
-            toast.show();
+            //toast.show();
             intent = new Intent(this, NavigationDrawerActivity.class);
             startActivity(intent);
         }
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             String token = getSharedPreferences("myPrefs", MODE_PRIVATE).getAll().get("token").toString();
             Context c = getApplicationContext();
             Toast toast = Toast.makeText(c, token,  Toast.LENGTH_LONG);
-            toast.show();
+            //toast.show();
             intent = new Intent(this, NavigationDrawerActivity.class);
             startActivity(intent);
         }
