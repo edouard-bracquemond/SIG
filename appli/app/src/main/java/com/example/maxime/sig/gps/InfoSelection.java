@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 import com.example.maxime.sig.activity.ReportActivity;
 import com.example.maxime.sig.activity.SignalerActivity;
+import com.example.maxime.sig.activity.SuggestionActivity;
 import com.example.maxime.sig.activity.TreeActivity;
 import com.example.maxime.sig.activity.TreePicturesActivity;
 
@@ -92,6 +94,19 @@ public class InfoSelection {
             return c;
         }
         return "sigo:espace_publicev_arbres,sigo:dechets_pav";
+    }
+
+    @JavascriptInterface
+    public void getCoordonnees(String longitude, String lattitude){
+        Toast toast=Toast.makeText(mContext,longitude+" "+lattitude,Toast.LENGTH_LONG);
+        toast.show();
+
+        Intent intent = new Intent(mContext, SuggestionActivity.class);
+        intent.putExtra("lattitute", lattitude );
+        intent.putExtra("longitude", longitude);
+        mContext.startActivity(intent);
+
+
     }
 
 }

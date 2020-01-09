@@ -59,6 +59,21 @@ var view = new ol.View({
        });
    }
  });
+
+ map.on('dblclick', function(evt) {
+      var coord=ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+      InfoSelection.getCoordonnees(coord[0], coord[1]);
+   });
+
+   var dblClickInteraction;
+   map.getInteractions().getArray().forEach(function(interaction) {
+     if (interaction instanceof ol.interaction.DoubleClickZoom) {
+       dblClickInteraction = interaction;
+     }
+   });
+   map.removeInteraction(dblClickInteraction);
+
+
 function signaler() {
     var id = $('#id').val();
     InfoSelection.goToSignalerActivity("Dechet",id);
