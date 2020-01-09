@@ -97,15 +97,13 @@ public class InfoSelection {
     }
 
     @JavascriptInterface
-    public void getCoordonnees(int longitude, int latitude){
-        //Toast toast=Toast.makeText(mContext,longitude+" "+lattitude,Toast.LENGTH_LONG);
-        //toast.show();
+    public void getCoordonnees(String longitude, String latitude){
+
 
         Intent intent = new Intent(mContext, SuggestionActivity.class);
         intent.putExtra("latitute", latitude );
         intent.putExtra("longitude", longitude);
         mContext.startActivity(intent);
-
 
     }
 

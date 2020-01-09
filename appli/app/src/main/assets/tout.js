@@ -129,6 +129,7 @@ var type_eq ="";
  });
  map.on('dblclick', function(evt) {
       var coord=ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+      InfoSelection.getCoordonnees(coord[0],coord[1]);
    });
 
    var dblClickInteraction;
