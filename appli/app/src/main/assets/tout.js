@@ -128,19 +128,6 @@ var type_eq ="";
    }
  });
 
- map.on('dblclick', function(evt) {
-      var coord=ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-      InfoSelection.getCoordonnees(coord[0], coord[1]);
-   });
-
-   var dblClickInteraction;
-   map.getInteractions().getArray().forEach(function(interaction) {
-     if (interaction instanceof ol.interaction.DoubleClickZoom) {
-       dblClickInteraction = interaction;
-     }
-   });
-   map.removeInteraction(dblClickInteraction);
-
 function signaler() {
     var id = $('#id').val();
 
@@ -164,19 +151,27 @@ function photos() {
 
  // Objet géographique de la position de géolocalisation
  	var ObjPosition = new ol.Feature();
+
+ 	var style = new ol.style.Style({
+
+                 	    image: new ol.style.Icon({
+                            src: 'geoIcon.png',
+                            imgSize: [27, 55],
+                            rotateWithView: true
+                          })
+                 		/*image: new ol.style.Circle({
+                 			radius: 6,
+                 			fill: new ol.style.Fill({
+                 				color: '#3399CC'
+                 			}),
+                 			stroke: new ol.style.Stroke({
+                 				color: '#fff',
+                 				width: 2
+                 			})
+                 		})*/
+                 	});
  	// Attribution d'un style à l'objet
- 	ObjPosition.setStyle(new ol.style.Style({
- 		image: new ol.style.Circle({
- 			radius: 6,
- 			fill: new ol.style.Fill({
- 				color: '#3399CC'
- 			}),
- 			stroke: new ol.style.Stroke({
- 				color: '#fff',
- 				width: 2
- 			})
- 		})
- 	}));
+ 	ObjPosition.setStyle(style);
  	// Géolocalisation
  	var geolocation = new ol.Geolocation({
  	  enableHighAccuracy: true,
@@ -185,6 +180,14 @@ function photos() {
  	  // Important : Projection de la carte
  	  projection: view.getProjection()
  	});
+
+ 	geolocation.on('change:heading', function(evt) {
+ 	    var heading = geolocation.getHeading();
+ 	    console.log("heading "+heading+" "+Math.PI);
+ 	    style.getImage().setRotation(Math.PI / 180 * heading);
+
+ 	});
+
  	// On scrute les changements des propriétés
  	geolocation.on('change:position', function(evt) {
  	    //console.log("La geoloc a changé "+geolocation.getPosition());
