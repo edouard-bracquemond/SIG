@@ -7,6 +7,7 @@ var wmsSource = new ol.source.TileWMS({
                                 serverType: 'geoserver',
                                 transition: 0
                               });
+
 var wms_layer = new ol.layer.Tile({
           source: wmsSource
 	});
