@@ -4,6 +4,7 @@ package com.example.maxime.sig.api;
 import com.example.maxime.sig.model.AccessToken;
 import com.example.maxime.sig.model.Picture;
 import com.example.maxime.sig.model.Report;
+import com.example.maxime.sig.model.Suggestion;
 import com.example.maxime.sig.model.User;
 
 import java.util.List;
@@ -35,6 +36,12 @@ public interface Api {
         @Query("eq") String type,
         @Query("id_eq") int idEquipement
 
+    );
+    @POST("/suggesttions")
+    Call<Suggestion>createSuggestion(
+            @Header("Authorization") String authorization,
+            @Query("comment") String comment,
+            @Query("coords") String coords
     );
     @POST("/api/auth/signin")
     Call<AccessToken> login(
