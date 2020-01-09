@@ -25,7 +25,7 @@ public class SuggestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signaler);
+        setContentView(R.layout.activity_suggestion);
 
 
 
