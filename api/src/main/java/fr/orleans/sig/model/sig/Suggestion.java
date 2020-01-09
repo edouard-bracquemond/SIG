@@ -10,6 +10,7 @@ public class Suggestion {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
+    private String coords;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -31,6 +32,14 @@ public class Suggestion {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getCoords() {
+        return coords;
+    }
+
+    public void setCoords(String coords) {
+        this.coords = coords;
     }
 
     @JsonIgnore
