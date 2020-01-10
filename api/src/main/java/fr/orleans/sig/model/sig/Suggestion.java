@@ -1,6 +1,7 @@
 package fr.orleans.sig.model.sig;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vividsolutions.jts.geom.Geometry;
 import fr.orleans.sig.model.user.User;
 
 import javax.persistence.*;
@@ -8,21 +9,31 @@ import javax.persistence.*;
 @Entity
 public class Suggestion {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String comment;
     private String coords;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     private String pseudo;
+    @JsonIgnore
+    private Geometry geom;
+
+    public Geometry getGeom() {
+        return geom;
+    }
+
+    public void setGeom(Geometry geom) {
+        this.geom = geom;
+    }
 
     public Suggestion(){}
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
