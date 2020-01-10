@@ -80,6 +80,7 @@ var type_eq ="";
                 if(comment != null){
                     $('.modal-title').html("Suggestion")
                     $('#date').html("Commentaire : "+comment+" Suggéré par : "+user);
+                    $('#basicModal').modal('show');
                 }
                 if(corbeille_t != null){ // on clique sur une corbeille
                     $('.modal-title').html("Corbeille")

@@ -105,7 +105,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.suggestionID:{
+            case R.id.suggestioncbID:{
                 item.setChecked(!item.isChecked());
                 if(item.isChecked()){
                     InfoSelection.addCouche("sigo:suggestion");

@@ -23,7 +23,7 @@
         android:checkable="true"
         android:title="Recyclage"/>
     <item
-        android:id="@+id/suggestionID"
+        android:id="@+id/suggestioncbID"
         android:checkable="true"
         android:title="Suggestion"/>
 
