@@ -74,8 +74,13 @@ var type_eq ="";
                 genre = (obj['features'][0]['properties']['genre']);
                 espece = (obj['features'][0]['properties']['espece']);
                 variete = (obj['features'][0]['properties']['variete']);
-
-
+                //suggestion
+                comment = (obj['features'][0]['properties']['comment']);
+                user = (obj['features'][0]['properties']['pseudo']);
+                if(comment != null){
+                    $('.modal-title').html("Suggestion")
+                    $('#date').html("Commentaire : "+comment+" Suggéré par : "+user);
+                }
                 if(corbeille_t != null){ // on clique sur une corbeille
                     $('.modal-title').html("Corbeille")
                     $('#data').html("Type: " + corbeille_t+ "<br> Rue: " + corbeille_l + "<br> Secteur: " + corbeille_s +
@@ -123,6 +128,7 @@ var type_eq ="";
                     $('#basicModal').modal('show');
 
                 }
+
             }
        });
    }

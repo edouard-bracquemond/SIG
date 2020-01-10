@@ -68,11 +68,9 @@ public class SuggestionActivity extends AppCompatActivity {
 
                     //  final Intent intent = getIntent();
                     Intent intent = getIntent();
-                    String coords = intent.getStringExtra("latitude");
-                    coords = coords+","+intent.getStringExtra("longitude");
-                    Toast toast2 = null;
-                     toast2 = toast2.makeText(getApplicationContext(),coords,Toast.LENGTH_LONG);
-                    toast2.show();
+                    String coords = intent.getStringExtra("longitude");
+                    coords = coords+","+intent.getStringExtra("latitude");
+
                     Call call = api.createSuggestion("Bearer "+token,comment,coords);
                     call.enqueue(new Callback() {
                         Context context = getApplicationContext();
