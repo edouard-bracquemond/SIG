@@ -105,6 +105,18 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         switch (id) {
+            case R.id.suggestionID:{
+                item.setChecked(!item.isChecked());
+                if(item.isChecked()){
+                    InfoSelection.addCouche("sigo:suggestion");
+                }
+                else{
+                    InfoSelection.remove("sigo:suggestion");
+
+                }
+                myWebView.loadUrl("file:///android_asset/tout.html");
+                break;
+            }
             case R.id.arbreID: {
                 item.setChecked(!item.isChecked());
                 if (item.isChecked()) {
