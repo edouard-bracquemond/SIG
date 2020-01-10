@@ -1,6 +1,6 @@
 package fr.orleans.sig.controller;
 
-import fr.orleans.sig.model.sig.Equipement;
+import com.vividsolutions.jts.io.ParseException;
 import fr.orleans.sig.model.sig.Suggestion;
 import fr.orleans.sig.model.user.User;
 import fr.orleans.sig.repository.SuggestionRepository;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class SuggestionController {
     @PostMapping("/suggestions")
     public ResponseEntity<?> addSuggestions(@RequestParam(value = "comment") String commentaire,
                                             @RequestParam(value = "coords") String coords,
-                                            @CurrentUser UserPrincipal currentUser){
+                                            @CurrentUser UserPrincipal currentUser) throws ParseException {
 
         User user = userRepository.getOne(currentUser.getId());
 
@@ -44,6 +45,21 @@ public class SuggestionController {
         suggestion.setPseudo(user.getUsername());
 
         suggestionRepository.save(suggestion);
+
+        String [] s = coords.split(",");
+        System.out.println(s[0]+" "+s[1]);
+
+        Double longi = Double.valueOf(s[0]);
+        Double lati = Double.valueOf(s[1]);
+
+        System.out.println(lati+" "+longi);
+
+        if (!suggestionRepository.translateToGeom(longi, lati).isEmpty()){
+            suggestionRepository.addGeom(longi,lati, suggestion.getId());
+        }else{
+            suggestionRepository.delete(suggestion);
+            return ResponseEntity.status(400).body("Oulala on reste dans l'agglo");
+        }
 
         return ResponseEntity.ok(suggestion);
     }
