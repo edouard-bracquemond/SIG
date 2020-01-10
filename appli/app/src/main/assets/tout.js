@@ -79,7 +79,7 @@ var type_eq ="";
                 user = (obj['features'][0]['properties']['pseudo']);
                 if(comment != null){
                     $('.modal-title').html("Suggestion")
-                    $('#date').html("Commentaire : "+comment+" Suggéré par : "+user);
+                    $('#data').html("Commentaire : "+comment+" Suggéré par : "+user);
                     $('#basicModal').modal('show');
                 }
                 if(corbeille_t != null){ // on clique sur une corbeille

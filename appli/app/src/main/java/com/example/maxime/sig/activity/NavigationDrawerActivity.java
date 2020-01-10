@@ -114,6 +114,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
                     InfoSelection.remove("sigo:suggestion");
 
                 }
+                myWebView.clearCache(true);
                 myWebView.loadUrl("file:///android_asset/tout.html");
                 break;
             }
